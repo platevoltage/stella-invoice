@@ -1,5 +1,30 @@
 .App {
+  margin-top: 2em;
   text-align: center;
-  font-size: .5em;
+  font-size: 1em;
 }
 
+.options .input label {
+  border: 1px solid #30363d22;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  /* width: 5em; */
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload, .button {
+  color: inherit;
+  font-size: inherit;
+  border: 2px solid #30363d;
+  background-color: #161b22;
+  border-radius: 6px; 
+
+  padding: .5em 1em;
+  cursor: pointer;
+  
+}
