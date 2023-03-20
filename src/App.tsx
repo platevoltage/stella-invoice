@@ -35,6 +35,7 @@ interface Tag {
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
   const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
+  const [clientIds, setClientIds] = useState<number[]>([]);
 
   const unparseConfig: Papa.UnparseConfig = {
     quotes: false, //or array of booleans
@@ -63,8 +64,9 @@ function App() {
     delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP],
     complete: (result: Papa.ParseResult<string>) => {
       const table: Tag[] = [];
+      const _clientIds: number[] = [];
       for (let tag of result.data) {
-        table.push({
+        const x: Tag = {
           jobId: +tag[0],
           billingReference: tag[1].trim(),
           orderPlacer: tag[2].trim(),
@@ -91,8 +93,15 @@ function App() {
           deliveryNotes: tag[23].trim(),
           pod: tag[24].trim(),
           specialInstructions: tag[25].trim(),
-        });
+        };
+        table.push(x);
+        if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {
+          _clientIds.push(x.clientId);
+        }
+
       }
+
+      setClientIds(_clientIds);
       setInputCSV(table);
     }
   }
@@ -104,12 +113,6 @@ function App() {
     return (await res.text()).trim();
   }
 
-  function saveCSV(input: Tag[]) {
-
-    const csv = Papa.unparse(input, unparseConfig);
-    console.log(csv);
-    outputCSVs.push(csv);
-  }
 
   useEffect(() => {
     (async () => { 
@@ -119,12 +122,14 @@ function App() {
 
   useEffect(() => {
     const filtered = inputCSV.filter((x: Tag) => x.clientId === 5642);
-    saveCSV(filtered);
+    const csv = Papa.unparse(filtered, unparseConfig);
+    // console.log(csv);
+
   },[inputCSV]);
 
   return (
     <div className="App">
-     <pre>{outputCSVs[0]}</pre>
+     <pre>{clientIds}</pre>
       {/* {inputCSV.map((tag: Tag) => 
         <>
 
