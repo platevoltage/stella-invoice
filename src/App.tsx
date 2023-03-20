@@ -121,22 +121,24 @@ function App() {
   },[]);
 
   useEffect(() => {
-    const filtered = inputCSV.filter((x: Tag) => x.clientId === 5642);
-    const csv = Papa.unparse(filtered, unparseConfig);
-    // console.log(csv);
-
+    const csvArray = [];
+    for (let clientId of clientIds) {
+      const filtered = inputCSV.filter((x: Tag) => x.clientId === clientId);
+      const csv = Papa.unparse(filtered, unparseConfig);
+      csvArray.push(csv);
+    }
+    setOutputCSVs(csvArray);
   },[inputCSV]);
 
   return (
     <div className="App">
-     <pre>{clientIds}</pre>
-      {/* {inputCSV.map((tag: Tag) => 
-        <>
+    {outputCSVs.map( clientData => 
+      <>
+        <pre>{clientData}</pre>
+        <hr></hr>
+      </>
+    )}
 
-        
-        <p>{tag.clientId} {tag.clientName}</p>
-        </>
-      )} */}
     </div>
   );
 }
