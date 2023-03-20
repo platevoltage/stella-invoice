@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
 
@@ -116,24 +116,38 @@ function App() {
   function handleDownload() {
     for (let i in clientIds) {
       setTimeout(() => {
-        console.log(i)
         let csv = "job id,billing reference,order placer,client name,client id,courier,courier number,origin name,origin street,origin postal code,destination street,destination floor/suite/apt.,destination postal code,destination zone,delivery status,creation time,ready time,due time,service,rate,payment method as string,delivery fee,extras,delivery notes,pod,special instructions\n";
         csv += outputCSVs[i];
         const blob = new Blob([csv], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.download = `${clientIds[i]}.csv`;
+        link.download = `${clientIds[i]} - ${new Date().toDateString()}.csv`;
         link.href = url;
         link.click();
         URL.revokeObjectURL(url);
-      }, +i*100);
+      }, +i*300);
     }
-};
+  };
+
+  function handleLoad(e: ChangeEvent<HTMLInputElement>) {
+          
+    let fileList = e.target.files || [];
+    if (fileList.length > 0) {
+        console.log(fileList[0]);
+        const reader = new FileReader();
+        reader.readAsText(fileList[0]);
+        reader.onload = async function(e) {
+            const csv = reader.result as string;
+            Papa.parse(csv, parseConfig);
+        };
+    }
+
+  }
 
 
   useEffect(() => {
     (async () => { 
-      Papa.parse(await getCSV(), parseConfig);
+      // Papa.parse(await getCSV(), parseConfig);
     })();
   },[]);
 
@@ -149,13 +163,14 @@ function App() {
 
   return (
     <div className="App">
+      <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Upload csv
       <button onClick={handleDownload}>download</button>
-      {/* {outputCSVs.map( clientData => 
-        <>
+      {outputCSVs.map( (clientData, i) => 
+        <div key={i}>
           <pre>{clientData}</pre>
           <hr></hr>
-        </>
-      )} */}
+        </div>
+      )}
 
     </div>
   );
