@@ -34,6 +34,18 @@ interface Tag {
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
+  const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
+
+  const unparseConfig: Papa.UnparseConfig = {
+    quotes: false, //or array of booleans
+    quoteChar: '"',
+    escapeChar: '"',
+    delimiter: ",\t",
+    header: false,
+    newline: "\n",
+    skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
+    // columns: null //or array of strings
+  }
   const parseConfig: Papa.ParseConfig = {
     delimiter: "",	// auto-detect
     quoteChar: '"',
@@ -92,22 +104,34 @@ function App() {
     return (await res.text()).trim();
   }
 
+  function saveCSV(input: Tag[]) {
+
+    const csv = Papa.unparse(input, unparseConfig);
+    console.log(csv);
+    outputCSVs.push(csv);
+  }
+
   useEffect(() => {
     (async () => { 
       Papa.parse(await getCSV(), parseConfig);
     })();
   },[]);
 
+  useEffect(() => {
+    const filtered = inputCSV.filter((x: Tag) => x.clientId === 5642);
+    saveCSV(filtered);
+  },[inputCSV]);
 
   return (
     <div className="App">
-      {inputCSV.map((tag: Tag) => 
+     <pre>{outputCSVs[0]}</pre>
+      {/* {inputCSV.map((tag: Tag) => 
         <>
 
         
         <p>{tag.clientId} {tag.clientName}</p>
         </>
-      )}
+      )} */}
     </div>
   );
 }
