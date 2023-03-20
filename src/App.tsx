@@ -113,6 +113,23 @@ function App() {
     return (await res.text()).trim();
   }
 
+  function handleDownload() {
+    for (let i in clientIds) {
+      setTimeout(() => {
+        console.log(i)
+        let csv = "job id,billing reference,order placer,client name,client id,courier,courier number,origin name,origin street,origin postal code,destination street,destination floor/suite/apt.,destination postal code,destination zone,delivery status,creation time,ready time,due time,service,rate,payment method as string,delivery fee,extras,delivery notes,pod,special instructions\n";
+        csv += outputCSVs[i];
+        const blob = new Blob([csv], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = `${clientIds[i]}.csv`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }, +i*100);
+    }
+};
+
 
   useEffect(() => {
     (async () => { 
@@ -132,12 +149,13 @@ function App() {
 
   return (
     <div className="App">
-    {outputCSVs.map( clientData => 
-      <>
-        <pre>{clientData}</pre>
-        <hr></hr>
-      </>
-    )}
+      <button onClick={handleDownload}>download</button>
+      {/* {outputCSVs.map( clientData => 
+        <>
+          <pre>{clientData}</pre>
+          <hr></hr>
+        </>
+      )} */}
 
     </div>
   );
