@@ -164,9 +164,9 @@ function App() {
   return (
     <div className="App">
       <label className="file-upload">
-      <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Upload csv
+      <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Load
       </label>
-      <button className="button" onClick={handleDownload}>download</button>
+      <button className="button" onClick={handleDownload}>Download</button>
       {outputCSVs.map( (clientData, i) => 
         <div key={i}>
           <pre>{clientData}</pre>
