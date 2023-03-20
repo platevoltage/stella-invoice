@@ -28,3 +28,12 @@ input[type="file"] {
   cursor: pointer;
   
 }
+
+
+.card {
+  background-color: #161b22;
+  color: inherit;
+  font-size: .5em;
+  white-space: nowrap;
+  width: 80%;
+}

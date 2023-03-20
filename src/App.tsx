@@ -1,6 +1,9 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+
 
 interface Tag {
   jobId: number;
@@ -167,12 +170,35 @@ function App() {
       <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Load
       </label>
       <button className="button" onClick={handleDownload}>Download</button>
-      {outputCSVs.map( (clientData, i) => 
+      {/* {outputCSVs.map( (clientData, i) => 
         <div key={i}>
           <pre>{clientData}</pre>
           <hr></hr>
         </div>
-      )}
+      )} */}
+{/* 
+      <Card className="card">
+        <Card.Header></Card.Header>
+        <ListGroup variant="flush">
+          {inputCSV.map( (clientData, i) => 
+            <div key={i}>
+              <ListGroup.Item>
+                <div className="container text-center" style={{padding: '0'}}>
+                  <div className="row" style={{ padding: '0' }}>
+                    {Object.keys(clientData).map((key, i) =>
+                  
+                      <div className="col-xl-1" key={i} style={{ padding: '1em'}}>
+                        {clientData[key as keyof Tag]}
+                      </div>
+                    )}
+
+                  </div>
+                </div>
+              </ListGroup.Item>
+            </div>
+          )}
+        </ListGroup>
+      </Card> */}
 
     </div>
   );
