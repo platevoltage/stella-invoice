@@ -13,6 +13,13 @@
     /* height: 1.5em */
 }
 
+.client-list .download-all {
+    margin-left: 1em;
+    margin-top: 1em;
+    height: 3em;
+}
+
+
 
 .no-file {
     text-align: center;
