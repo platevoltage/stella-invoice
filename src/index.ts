@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import * as path from 'path';
 
 const createWindow = () => {
@@ -13,7 +13,7 @@ const createWindow = () => {
     resizable: false,
     // maximizable: false,
     // movable: false,
-    // titleBarStyle: "hidden",
+    // titleBarStyle: "default",
     // useContentSize: true,
     // frame: false,
     // show: false,
@@ -42,6 +42,15 @@ app.whenReady().then(async () => {
   const win = createWindow();
   win.webContents.executeJavaScript('console.log("test")')
   // note: your contextMenu, Tooltip and Title code will go here!
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name, 
+      submenu: [
+       { label: "Quit", role: 'quit' }
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
 })
 
 
