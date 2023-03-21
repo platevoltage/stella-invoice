@@ -1,5 +1,5 @@
 {
-  "name": "youtube-smarttv-emu",
+  "name": "stella-invoice",
   "version": "1.0.0",
   "description": "",
   "author": "Garrett Corbin <jgarrettcorbin@gmail.com> (https://jgarrettcorbin.com)",
@@ -11,14 +11,12 @@
     "make": "tsc && electron-builder -mwl --linux deb rpm"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/platevoltage/youtube-smarttv-emu.git"
+    "type": "git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/platevoltage/youtube-smarttv-emu/issues"
   },
-  "homepage": "https://github.com/platevoltage/youtube-smarttv-emu#readme",
+  "homepage": "https://stella-courier.com",
   "devDependencies": {
 
     "deb": "^0.2.1",
@@ -33,15 +31,10 @@
       "output": "out"
     },
     "win": {
-      "icon": "./youtube.png"
-    },
-    "linux": {
-      "category": "AudioVideo",
-      "publish": ["github"],
-      "icon": "./youtube.png"
+      "icon": "./stella.png"
     },
     "mac": {
-      "icon": "./youtube.icns"
+      "icon": "./stella.icns"
     }
 
   }
