@@ -34,6 +34,7 @@ input[type="file"] {
 }
 
 .file-upload, .button, .options, .client-list {
+  transition: background-color .4s;
   color: inherit;
   font-size: inherit;
   border: 2px solid #30363d;
@@ -46,6 +47,14 @@ input[type="file"] {
   
 }
 
+.button:hover, .file-upload:hover{
+  background-color: #212c3b;
+}
+
+.button:active, .file-upload:active{
+  transition: background-color .1s;
+  background-color: #6d84a4;
+}
 
 .card {
   background-color: #161b22;
