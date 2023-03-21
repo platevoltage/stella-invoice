@@ -9,6 +9,7 @@
 }
 .client-list .button {
     margin-right: .2em;
+    margin-left: .6em;
     padding: 0em .3em 0em .3em;
     /* height: 1.5em */
 }
