@@ -1,5 +1,5 @@
-import React from 'react'
 import { Columns, columnDef } from '../interfaces';
+import './Options.css';
 
 interface Props {
     invoiceItems: Columns,
@@ -8,14 +8,14 @@ interface Props {
 
 export default function Options({invoiceItems, setInvoiceItems}: Props) {
   return (
-    <div>
+    <div className="options">
         {Object.keys(invoiceItems).map( (key, i) => 
             <div key={i}>
-            <label htmlFor={key}>{columnDef[key as keyof Columns]}</label>
             <input type="checkbox" id={key} name={key} value={key} checked={invoiceItems[key as keyof Columns]} onChange={() => {
                 invoiceItems[key as keyof Columns] = !invoiceItems[key as keyof Columns];
                 setInvoiceItems({...invoiceItems});
             }}></input>
+            <label htmlFor={key}>{columnDef[key as keyof Columns]}</label>
             </div>
         )}
     </div>

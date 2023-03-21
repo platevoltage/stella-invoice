@@ -1,14 +1,20 @@
 .App {
   margin-top: 2em;
-  text-align: center;
+  /* text-align: center; */
   font-size: 1em;
+  display: flex;
+  flex-direction: column;
 }
 
-.options .input label {
-  border: 1px solid #30363d22;
+.options, .input label {
+  /* border: 1px solid #30363d22; */
+  /* background-color: #161b22; */
+   /* text-align: center; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 6px; 
+  /* border: 2px solid #30363d; */
   
   /* width: 5em; */
 }
@@ -17,7 +23,11 @@ input[type="file"] {
   display: none;
 }
 
-.file-upload, .button {
+.file-upload {
+  text-align: center;
+}
+
+.file-upload, .button, .options {
   color: inherit;
   font-size: inherit;
   border: 2px solid #30363d;
