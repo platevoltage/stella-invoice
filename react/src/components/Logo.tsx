@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Logo() {
-  const circleColor = "#000000";
+  const circleColor = "#161b22";
   const courierColor = "#30363d";
   const courierColorFill = "#161b22";
   const stellaColor = "#161b22";
