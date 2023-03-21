@@ -57,6 +57,11 @@ export interface Columns {
   specialInstructions: boolean;
 }
 
+export interface Client {
+    id: number;
+    name: string;
+}
+
 export const columnDef = {
     jobId: "job id",
     billingReference: "billing reference",

@@ -1,13 +1,13 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
-import { Columns, Tag, columnDef, invoiceItemsDefaults } from './interfaces';
+import { Columns, Tag, columnDef, invoiceItemsDefaults, Client } from './interfaces';
 import Options from './components/Options';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
   const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
-  const [clientIds, setClientIds] = useState<number[]>([]);
+  const [clientMetaData, setclientMetaData] = useState<Client[]>([]);
   const [invoiceItems, setInvoiceItems] = useState<Columns>(invoiceItemsDefaults);
 
   const unparseConfig: Papa.UnparseConfig = {
@@ -38,6 +38,9 @@ function App() {
     complete: (result: Papa.ParseResult<string>) => {
       const table: Tag[] = [];
       const _clientIds: number[] = [];
+      const _clientMetaData: Client[] = [];
+   
+
       for (let tag of result.data) {
         const x: Tag = {
           jobId: +tag[0],
@@ -69,10 +72,15 @@ function App() {
         };
         table.push(x);
         if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {
+          const temp: Client = {
+            id: x.clientId,
+            name :x.clientName
+          }
           _clientIds.push(x.clientId);
+          _clientMetaData.push(temp);
         }
       }
-      setClientIds(_clientIds);
+      setclientMetaData(_clientMetaData);
       setInputCSV(table);
     }
   }
@@ -80,9 +88,9 @@ function App() {
   function processInvoices() {
     const csvArray = [];
     console.log(inputCSV);
-    for (let clientId of clientIds) {
+    for (let client of clientMetaData) {
       //filter by clientID
-      const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === clientId);
+      const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);
       //remove unwanted columns
       const output: any[] = []; 
       for (let tag of filtered) {
@@ -107,7 +115,7 @@ function App() {
 
   function handleDownload() {
     const csvArray = processInvoices();
-    for (let i in clientIds) {
+    for (let i in clientMetaData) {
       setTimeout(() => {
         let csv = "";
         for (let key in invoiceItems) {
@@ -120,7 +128,7 @@ function App() {
         const blob = new Blob([csv], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.download = `${clientIds[i]} - ${new Date().toDateString()}.csv`;
+        link.download = `${clientMetaData[i].id} - ${new Date().toDateString()}.csv`;
         link.href = url;
         link.click();
         URL.revokeObjectURL(url);
@@ -152,13 +160,23 @@ function App() {
 
   return (
     <div className="App">
+
       <label className="file-upload">
-      <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Load
+      <input type="file" accept="text/csv" onChange={handleLoad}></input>Load
       </label>
+
+
       <button className="button" onClick={handleDownload}>Download</button>
+
+      {/* {inputCSV[0].clientId} */}
 
       <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
 
+      {clientMetaData.map((client) => 
+        <div>
+        {client.name}
+        </div>
+      )}
 
     </div>
   );
