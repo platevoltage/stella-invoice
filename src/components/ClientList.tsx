@@ -1,14 +1,75 @@
 import React from 'react'
-import { Client } from '../interfaces';
+import { Columns, Tag, columnDef, Client } from '../interfaces';
 import './ClientList.css'
+import Papa from 'papaparse';
 
 interface Props {
-    clientMetaData: Client[]
+    clientMetaData: Client[];
+    inputCSV: Tag[];
+    invoiceItems: Columns;
 }
 
+const unparseConfig: Papa.UnparseConfig = {
+    quotes: false, //or array of booleans
+    quoteChar: '"',
+    escapeChar: '"',
+    delimiter: ",\t",
+    header: false,
+    newline: "\n",
+    skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
+    // columns: null //or array of strings
+}
 
+export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Props) {
+    function processInvoices() {
+    const csvArray = [];
+    console.log(inputCSV);
+    for (let client of clientMetaData) {
+      //filter by clientID
+      const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);
+      //remove unwanted columns
+      const output: any[] = []; 
+      for (let tag of filtered) {
+        const object: object = {};
+        for (let key in invoiceItems) {
+          if (invoiceItems[key as keyof Tag] === true ) {
+            Object.defineProperty(object, key, {
+              value: tag[key as keyof Tag],
+              enumerable: true
+            })
+          };
+        }
+        output.push(object);
+      }
+      const csv = Papa.unparse(output, unparseConfig);
+      csvArray.push(csv);
+    }
+    // setOutputCSVs(csvArray);
+    window.localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
+    return csvArray;
+  }
 
-export default function ClientList({clientMetaData}: Props) {
+  function handleDownload() {
+    const csvArray = processInvoices();
+    for (let i in clientMetaData) {
+      setTimeout(() => {
+        let csv = "";
+        for (let key in invoiceItems) {
+          if (invoiceItems[key as keyof Columns]) {
+            csv += columnDef[key as keyof Columns] + ',';
+          }
+        }
+        csv += "\n" + csvArray[i];
+        const blob = new Blob([csv], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.download = `${clientMetaData[i].id} - ${new Date().toDateString()}.csv`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }, +i*300);
+    }
+  };
   return (
     <div className="client-list">
         {clientMetaData.map((client) => 
@@ -22,7 +83,7 @@ export default function ClientList({clientMetaData}: Props) {
         </div>
         )}
         {clientMetaData.length < 1 && <div className="no-file">No File Selected</div>}
-
+        <button className="button" onClick={handleDownload}>Download All</button>
     </div>
   )
 }

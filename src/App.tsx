@@ -1,26 +1,26 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
-import { Columns, Tag, columnDef, invoiceItemsDefaults, Client } from './interfaces';
+import { Columns, Tag, invoiceItemsDefaults, Client } from './interfaces';
 import Options from './components/Options';
 import ClientList from './components/ClientList';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
-  const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
+  // const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
   const [clientMetaData, setclientMetaData] = useState<Client[]>([]);
   const [invoiceItems, setInvoiceItems] = useState<Columns>(invoiceItemsDefaults);
 
-  const unparseConfig: Papa.UnparseConfig = {
-    quotes: false, //or array of booleans
-    quoteChar: '"',
-    escapeChar: '"',
-    delimiter: ",\t",
-    header: false,
-    newline: "\n",
-    skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
-    // columns: null //or array of strings
-  }
+  // const unparseConfig: Papa.UnparseConfig = {
+  //   quotes: false, //or array of booleans
+  //   quoteChar: '"',
+  //   escapeChar: '"',
+  //   delimiter: ",\t",
+  //   header: false,
+  //   newline: "\n",
+  //   skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
+  //   // columns: null //or array of strings
+  // }
   const parseConfig: Papa.ParseConfig = {
     delimiter: "",	// auto-detect
     quoteChar: '"',
@@ -86,56 +86,55 @@ function App() {
     }
   }
 
-  function processInvoices() {
-    const csvArray = [];
-    console.log(inputCSV);
-    for (let client of clientMetaData) {
-      //filter by clientID
-      const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);
-      //remove unwanted columns
-      const output: any[] = []; 
-      for (let tag of filtered) {
-        const object: object = {};
-        for (let key in invoiceItems) {
-          if (invoiceItems[key as keyof Tag] === true ) {
-            Object.defineProperty(object, key, {
-              value: tag[key as keyof Tag],
-              enumerable: true
-            })
-          };
-        }
-        output.push(object);
-      }
-      const csv = Papa.unparse(output, unparseConfig);
-      csvArray.push(csv);
-    }
-    setOutputCSVs(csvArray);
-    window.localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
-    return csvArray;
-  }
+  // function processInvoices() {
+  //   const csvArray = [];
+  //   console.log(inputCSV);
+  //   for (let client of clientMetaData) {
+  //     //filter by clientID
+  //     const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);
+  //     //remove unwanted columns
+  //     const output: any[] = []; 
+  //     for (let tag of filtered) {
+  //       const object: object = {};
+  //       for (let key in invoiceItems) {
+  //         if (invoiceItems[key as keyof Tag] === true ) {
+  //           Object.defineProperty(object, key, {
+  //             value: tag[key as keyof Tag],
+  //             enumerable: true
+  //           })
+  //         };
+  //       }
+  //       output.push(object);
+  //     }
+  //     const csv = Papa.unparse(output, unparseConfig);
+  //     csvArray.push(csv);
+  //   }
+  //   setOutputCSVs(csvArray);
+  //   window.localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
+  //   return csvArray;
+  // }
 
-  function handleDownload() {
-    const csvArray = processInvoices();
-    for (let i in clientMetaData) {
-      setTimeout(() => {
-        let csv = "";
-        for (let key in invoiceItems) {
-          if (invoiceItems[key as keyof Columns]) {
-            csv += columnDef[key as keyof Columns] + ',';
-          }
-        }
-        csv += "\n";
-        csv += csvArray[i];
-        const blob = new Blob([csv], { type: "text/plain" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.download = `${clientMetaData[i].id} - ${new Date().toDateString()}.csv`;
-        link.href = url;
-        link.click();
-        URL.revokeObjectURL(url);
-      }, +i*300);
-    }
-  };
+  // function handleDownload() {
+  //   const csvArray = processInvoices();
+  //   for (let i in clientMetaData) {
+  //     setTimeout(() => {
+  //       let csv = "";
+  //       for (let key in invoiceItems) {
+  //         if (invoiceItems[key as keyof Columns]) {
+  //           csv += columnDef[key as keyof Columns] + ',';
+  //         }
+  //       }
+  //       csv += "\n" + csvArray[i];
+  //       const blob = new Blob([csv], { type: "text/plain" });
+  //       const url = URL.createObjectURL(blob);
+  //       const link = document.createElement("a");
+  //       link.download = `${clientMetaData[i].id} - ${new Date().toDateString()}.csv`;
+  //       link.href = url;
+  //       link.click();
+  //       URL.revokeObjectURL(url);
+  //     }, +i*300);
+  //   }
+  // };
 
   function handleLoad(e: ChangeEvent<HTMLInputElement>) {
           
@@ -169,14 +168,11 @@ function App() {
         </label>
 
 
-        <ClientList clientMetaData={clientMetaData}/>
-        <button className="button" onClick={handleDownload}>Download All</button>
+        <ClientList clientMetaData={clientMetaData} inputCSV={inputCSV} invoiceItems={invoiceItems} />
+
       </div>
 
       <div className="column">
-
-
-        {/* {inputCSV[0].clientId} */}
 
         <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
         
