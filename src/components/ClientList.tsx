@@ -6,6 +6,8 @@ interface Props {
     clientMetaData: Client[]
 }
 
+
+
 export default function ClientList({clientMetaData}: Props) {
   return (
     <div className="client-list">
@@ -20,6 +22,7 @@ export default function ClientList({clientMetaData}: Props) {
         </div>
         )}
         {clientMetaData.length < 1 && <div className="no-file">No File Selected</div>}
+
     </div>
   )
 }
