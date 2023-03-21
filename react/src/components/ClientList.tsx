@@ -81,9 +81,13 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
   return (
     <div className="client-list">
         {/* <button className="button download-all" onClick={handleDownload}>Download All</button> */}
-        {clientMetaData.length < 1 ? 
+        {/* {clientMetaData.length < 1 ? 
           <div className="no-file">No File Selected</div> : 
           <button className="button download-all" onClick={handleDownload}><span id={"all"}>Download All</span></button>
+        } */}
+        {clientMetaData.length < 1 ? 
+          <div className="no-file">No File Selected</div> : 
+          <></>
         }
         {clientMetaData.map((client, index) => 
         <div>
