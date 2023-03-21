@@ -2,6 +2,7 @@ import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
 import { Columns, Tag, columnDef, invoiceItemsDefaults } from './interfaces';
+import Options from './components/Options';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
@@ -156,15 +157,8 @@ function App() {
       </label>
       <button className="button" onClick={handleDownload}>Download</button>
 
-      {Object.keys(invoiceItems).map( (key, i) => 
-        <div key={i}>
-          <label htmlFor="vehicle1">{columnDef[key as keyof Columns]}</label>
-          <input type="checkbox" id={key} name={key} value={key} checked={invoiceItems[key as keyof Columns]} onChange={() => {
-            invoiceItems[key as keyof Columns] = !invoiceItems[key as keyof Columns];
-            setInvoiceItems({...invoiceItems});
-          }}></input>
-        </div>
-      )}
+      <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
+
 
     </div>
   );
