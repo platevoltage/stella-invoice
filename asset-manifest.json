@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/stella-invoice/static/css/main.de1ff052.css",
-    "main.js": "/stella-invoice/static/js/main.d8f2a134.js",
+    "main.css": "/stella-invoice/static/css/main.f074620d.css",
+    "main.js": "/stella-invoice/static/js/main.8ea82bd0.js",
     "static/js/787.c5be4e27.chunk.js": "/stella-invoice/static/js/787.c5be4e27.chunk.js",
     "index.html": "/stella-invoice/index.html",
-    "main.de1ff052.css.map": "/stella-invoice/static/css/main.de1ff052.css.map",
-    "main.d8f2a134.js.map": "/stella-invoice/static/js/main.d8f2a134.js.map",
+    "main.f074620d.css.map": "/stella-invoice/static/css/main.f074620d.css.map",
+    "main.8ea82bd0.js.map": "/stella-invoice/static/js/main.8ea82bd0.js.map",
     "787.c5be4e27.chunk.js.map": "/stella-invoice/static/js/787.c5be4e27.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.de1ff052.css",
-    "static/js/main.d8f2a134.js"
+    "static/css/main.f074620d.css",
+    "static/js/main.8ea82bd0.js"
   ]
 }
