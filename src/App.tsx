@@ -1,40 +1,13 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
-import { Columns, Tag, columnDef } from './interfaces';
+import { Columns, Tag, columnDef, invoiceItemsDefaults } from './interfaces';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
   const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
   const [clientIds, setClientIds] = useState<number[]>([]);
-  const [invoiceItems, setInvoiceItems] = useState<Columns>({
-    jobId: true,
-    billingReference: true,
-    orderPlacer: true,
-    clientName: true,
-    clientId: true,
-    courier: true,
-    courierId: true,
-    originName: true,
-    originStreet: true,
-    originPostalCode: true,
-    destinationStreet: true,
-    destinationFloorStreetApt: true,
-    destinationPostalCode: true,
-    destinationZone: true,
-    deliveryStatus: true,
-    creationTime: true,
-    readyTime: true,
-    dueTime: true,
-    service: true,
-    rate: true,
-    paymentMethod: true,
-    deliveryFee: true,
-    extras: true,
-    deliveryNotes: true,
-    pod: true,
-    specialInstructions: true,
-  });
+  const [invoiceItems, setInvoiceItems] = useState<Columns>(invoiceItemsDefaults);
 
   const unparseConfig: Papa.UnparseConfig = {
     quotes: false, //or array of booleans
@@ -97,20 +70,11 @@ function App() {
         if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {
           _clientIds.push(x.clientId);
         }
-
       }
-
       setClientIds(_clientIds);
       setInputCSV(table);
     }
   }
-  // async function getCSV() {
-  //   const res = await fetch(`${process.env.PUBLIC_URL}/data.csv`);
-  //   if (!res.ok) {
-  //     throw res;
-  //   }
-  //   return (await res.text()).trim();
-  // }
 
   function processInvoices() {
     const csvArray = [];
@@ -182,14 +146,8 @@ function App() {
     if (window.localStorage.getItem('invoiceItems')) {
       setInvoiceItems(JSON.parse(window.localStorage.getItem('invoiceItems') || ""))
     }
-    // (async () => { 
-    //   Papa.parse(await getCSV(), parseConfig);
-    // })();
   },[]);
 
-  // useEffect(() => {
-  //   processInvoices();
-  // },[inputCSV]);
 
   return (
     <div className="App">
