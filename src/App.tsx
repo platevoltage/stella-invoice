@@ -162,19 +162,25 @@ function App() {
   return (
     <div className="App">
 
-      <label className="file-upload">
-      <input type="file" accept="text/csv" onChange={handleLoad}></input>Load
-      </label>
+      <div className="column">
+
+        <label className="file-upload">
+        <input type="file" accept="text/csv" onChange={handleLoad}></input>Load CSV
+        </label>
 
 
-      <button className="button" onClick={handleDownload}>Download</button>
+        <ClientList clientMetaData={clientMetaData}/>
+        <button className="button" onClick={handleDownload}>Download All</button>
+      </div>
 
-      {/* {inputCSV[0].clientId} */}
+      <div className="column">
 
-      <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
-      
-      <ClientList clientMetaData={clientMetaData}/>
 
+        {/* {inputCSV[0].clientId} */}
+
+        <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
+        
+      </div>
     </div>
   );
 }
