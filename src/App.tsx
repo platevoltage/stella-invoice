@@ -104,15 +104,43 @@ function App() {
       setInputCSV(table);
     }
   }
-  async function getCSV() {
-    const res = await fetch(`${process.env.PUBLIC_URL}/data.csv`);
-    if (!res.ok) {
-      throw res;
+  // async function getCSV() {
+  //   const res = await fetch(`${process.env.PUBLIC_URL}/data.csv`);
+  //   if (!res.ok) {
+  //     throw res;
+  //   }
+  //   return (await res.text()).trim();
+  // }
+
+  function processInvoices() {
+    const csvArray = [];
+    console.log(inputCSV);
+    for (let clientId of clientIds) {
+      //filter by clientID
+      const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === clientId);
+      //remove unwanted columns
+      const output: any[] = []; 
+      for (let tag of filtered) {
+        const object: object = {};
+        for (let key in invoiceItems) {
+          if (invoiceItems[key as keyof Tag] === true ) {
+            Object.defineProperty(object, key, {
+              value: tag[key as keyof Tag],
+              enumerable: true
+            })
+          };
+        }
+        output.push(object);
+      }
+      const csv = Papa.unparse(output, unparseConfig);
+      csvArray.push(csv);
     }
-    return (await res.text()).trim();
+    setOutputCSVs(csvArray);
+    return csvArray;
   }
 
   function handleDownload() {
+    const csvArray = processInvoices();
     for (let i in clientIds) {
       setTimeout(() => {
         let csv = "";
@@ -122,7 +150,7 @@ function App() {
           }
         }
         csv += "\n";
-        csv += outputCSVs[i];
+        csv += csvArray[i];
         const blob = new Blob([csv], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -149,30 +177,15 @@ function App() {
 
   }
 
+  // useEffect(() => {
+  //   (async () => { 
+  //     Papa.parse(await getCSV(), parseConfig);
+  //   })();
+  // },[]);
 
-  useEffect(() => {
-    (async () => { 
-      // Papa.parse(await getCSV(), parseConfig);
-    })();
-  },[]);
-
-  useEffect(() => {
-    const csvArray = [];
-
-    for (let clientId of clientIds) {
-      //filter by clientID
-      let filtered: any = inputCSV.filter((x: any) => x.clientId === clientId);
-      //remove unwanted columns
-      for (let tag of filtered) {
-        for (let key in invoiceItems) {
-          if (invoiceItems[key as keyof Tag] === false ) delete tag[key];
-        }
-      }
-      const csv = Papa.unparse(filtered, unparseConfig);
-      csvArray.push(csv);
-    }
-    setOutputCSVs(csvArray);
-  },[inputCSV]);
+  // useEffect(() => {
+  //   processInvoices();
+  // },[inputCSV]);
 
   return (
     <div className="App">
@@ -180,9 +193,10 @@ function App() {
       <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Load
       </label>
       <button className="button" onClick={handleDownload}>Download</button>
+
       {Object.keys(invoiceItems).map( (key, i) => 
         <div key={i}>
-          <label htmlFor="vehicle1">{key}</label>
+          <label htmlFor="vehicle1">{columnDef[key as keyof Columns]}</label>
           <input type="checkbox" id={key} name={key} value={key} checked={invoiceItems[key as keyof Columns]} onChange={() => {
             invoiceItems[key as keyof Columns] = !invoiceItems[key as keyof Columns];
             setInvoiceItems({...invoiceItems});
