@@ -4,6 +4,7 @@ import Papa from 'papaparse';
 import { Columns, Tag, invoiceItemsDefaults, Client } from './interfaces';
 import Options from './components/Options';
 import ClientList from './components/ClientList';
+import Logo from './components/Logo';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
@@ -86,56 +87,6 @@ function App() {
     }
   }
 
-  // function processInvoices() {
-  //   const csvArray = [];
-  //   console.log(inputCSV);
-  //   for (let client of clientMetaData) {
-  //     //filter by clientID
-  //     const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);
-  //     //remove unwanted columns
-  //     const output: any[] = []; 
-  //     for (let tag of filtered) {
-  //       const object: object = {};
-  //       for (let key in invoiceItems) {
-  //         if (invoiceItems[key as keyof Tag] === true ) {
-  //           Object.defineProperty(object, key, {
-  //             value: tag[key as keyof Tag],
-  //             enumerable: true
-  //           })
-  //         };
-  //       }
-  //       output.push(object);
-  //     }
-  //     const csv = Papa.unparse(output, unparseConfig);
-  //     csvArray.push(csv);
-  //   }
-  //   setOutputCSVs(csvArray);
-  //   window.localStorage.setItem("invoiceItems", JSON.stringify(invoiceItems));
-  //   return csvArray;
-  // }
-
-  // function handleDownload() {
-  //   const csvArray = processInvoices();
-  //   for (let i in clientMetaData) {
-  //     setTimeout(() => {
-  //       let csv = "";
-  //       for (let key in invoiceItems) {
-  //         if (invoiceItems[key as keyof Columns]) {
-  //           csv += columnDef[key as keyof Columns] + ',';
-  //         }
-  //       }
-  //       csv += "\n" + csvArray[i];
-  //       const blob = new Blob([csv], { type: "text/plain" });
-  //       const url = URL.createObjectURL(blob);
-  //       const link = document.createElement("a");
-  //       link.download = `${clientMetaData[i].id} - ${new Date().toDateString()}.csv`;
-  //       link.href = url;
-  //       link.click();
-  //       URL.revokeObjectURL(url);
-  //     }, +i*300);
-  //   }
-  // };
-
   function handleLoad(e: ChangeEvent<HTMLInputElement>) {
           
     let fileList = e.target.files || [];
@@ -160,22 +111,23 @@ function App() {
 
   return (
     <div className="App">
+      <div className="outer-container">
+        <div className="column">
 
-      <div className="column">
-
-        <label className="file-upload">
-        <input type="file" accept="text/csv" onChange={handleLoad}></input>Load CSV
-        </label>
+          <label className="file-upload">
+          <input type="file" accept="text/csv" onChange={handleLoad}></input>Load CSV
+          </label>
 
 
-        <ClientList clientMetaData={clientMetaData} inputCSV={inputCSV} invoiceItems={invoiceItems} />
+          <ClientList clientMetaData={clientMetaData} inputCSV={inputCSV} invoiceItems={invoiceItems} />
 
-      </div>
+        </div>
 
-      <div className="column">
-
-        <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
-        
+        <div className="column">
+          <Logo />
+          <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
+          
+        </div>
       </div>
     </div>
   );

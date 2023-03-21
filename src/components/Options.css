@@ -1,9 +1,13 @@
 .options {
     font-size: .8em;
     padding: 1em;
-    
+    width: 36em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .options input {
     margin: .5em;
 }
+

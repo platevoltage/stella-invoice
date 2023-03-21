@@ -49,7 +49,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
 
   function handleDownload(event: any) {
     const csvArray = processInvoices();
-    if (event.target.id) {   //if no id, all files are downloaded
+    if (event.target.id.length) {   //if no id, all files are downloaded
       downloadFile(csvArray, event.target.id);
     } 
     else {
@@ -80,6 +80,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
 
   return (
     <div className="client-list">
+        <button className="button download-all" onClick={handleDownload}>Download All</button>
         {clientMetaData.map((client, index) => 
         <div>
             <button className="button" onClick={handleDownload}>
@@ -92,7 +93,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
         </div>
         )}
         {clientMetaData.length < 1 && <div className="no-file">No File Selected</div>}
-        <button className="button download-all" onClick={handleDownload}>Download All</button>
+        
     </div>
   )
 }

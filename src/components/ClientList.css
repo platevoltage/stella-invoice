@@ -1,8 +1,11 @@
 .client-list {
-    min-height: 5em;
+    /* min-height: 5em; */
+    /* max-height: 30em; */
+    height: 100%;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     padding-left: .2em;
     font-size: .8em;
     /* text-align: center; */
@@ -14,10 +17,8 @@
     /* height: 1.5em */
 }
 
-.client-list .download-all {
+.download-all {
     margin-left: 1em;
-    margin-top: 1em;
-    height: 3em;
 }
 
 

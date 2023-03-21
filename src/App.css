@@ -1,15 +1,26 @@
 .App {
-  margin: 2em;
+  /* margin-top: 2em; */
   /* text-align: center; */
   font-size: 1em;
   display: flex;
   /* flex-direction: column; */
 }
 
+.outer-container {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  max-height: calc(100vh - 4em);
+  min-height: 31em;
+}
+
 .column {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   min-width: 17em;
+  overflow-y: hidden;
 }
 
 .input label {
@@ -34,7 +45,8 @@ input[type="file"] {
 }
 
 .file-upload, .button, .options, .client-list {
-  transition: background-color .4s;
+  transition-property: background-color, color, border-color;
+  transition-duration: .2s;
   color: inherit;
   font-size: inherit;
   border: 2px solid #30363d;
@@ -48,7 +60,9 @@ input[type="file"] {
 }
 
 .button:hover, .file-upload:hover{
-  background-color: #212c3b;
+  background-color: #1ebcb4;
+  border-color: #000000;
+  color: #000000;
 }
 
 .button:active, .file-upload:active{
@@ -62,4 +76,13 @@ input[type="file"] {
   font-size: .5em;
   white-space: nowrap;
   width: 80%;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100%);
+  width: calc(100% - 4em );
+  margin: 0em 2em  0 2em;
 }
