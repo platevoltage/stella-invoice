@@ -1,54 +1,48 @@
 {
-  "name": "stella-invoice",
-  "homepage": "http://platevoltage.github.io/stella-invoice",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.16",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "bootstrap": "^5.2.3",
-    "gh-pages": "^5.0.0",
-    "papaparse": "^5.4.0",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.7.2",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "sass": "^1.59.3",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "youtube-smarttv-emu",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Garrett Corbin <jgarrettcorbin@gmail.com> (https://jgarrettcorbin.com)",
+  "main": "dist/index.js",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd react && npm run build:electron",
+    "start": "tsc && electron .",
+    "make": "tsc && electron-builder -mwl --linux deb rpm"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/platevoltage/youtube-smarttv-emu.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/platevoltage/youtube-smarttv-emu/issues"
   },
+  "homepage": "https://github.com/platevoltage/youtube-smarttv-emu#readme",
   "devDependencies": {
-    "@types/papaparse": "^5.3.7"
+
+    "deb": "^0.2.1",
+    "electron": "^21.2.2",
+    "electron-is-dev": "^2.0.0"
+  },
+  "dependencies": {
+  },
+  "build": {
+    "appId": "com.example.app",
+    "directories": {
+      "output": "out"
+    },
+    "win": {
+      "icon": "./youtube.png"
+    },
+    "linux": {
+      "category": "AudioVideo",
+      "publish": ["github"],
+      "icon": "./youtube.png"
+    },
+    "mac": {
+      "icon": "./youtube.icns"
+    }
+
   }
 }
