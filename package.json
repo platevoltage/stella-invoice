@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd react && npm run build:electron",
     "start": "tsc && electron .",
-    "make": "tsc && electron-builder -mwl --linux deb rpm"
+    "make": "tsc && electron-builder --mac"
   },
   "repository": {
     "type": "git"
