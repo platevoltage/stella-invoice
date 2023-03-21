@@ -6,7 +6,7 @@
   flex-direction: column;
 }
 
-.options, .input label {
+.input label {
   /* border: 1px solid #30363d22; */
   /* background-color: #161b22; */
    /* text-align: center; */
@@ -27,7 +27,7 @@ input[type="file"] {
   text-align: center;
 }
 
-.file-upload, .button, .options {
+.file-upload, .button, .options, .client-list {
   color: inherit;
   font-size: inherit;
   border: 2px solid #30363d;

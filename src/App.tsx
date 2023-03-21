@@ -3,6 +3,7 @@ import './App.css';
 import Papa from 'papaparse';
 import { Columns, Tag, columnDef, invoiceItemsDefaults, Client } from './interfaces';
 import Options from './components/Options';
+import ClientList from './components/ClientList';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
@@ -171,12 +172,8 @@ function App() {
       {/* {inputCSV[0].clientId} */}
 
       <Options invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
-
-      {clientMetaData.map((client) => 
-        <div>
-        {client.name}
-        </div>
-      )}
+      
+      <ClientList clientMetaData={clientMetaData}/>
 
     </div>
   );
