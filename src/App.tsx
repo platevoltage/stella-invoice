@@ -1,8 +1,6 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 
 
 interface Tag {
@@ -35,10 +33,95 @@ interface Tag {
 
 }
 
+interface Columns {
+  jobId: boolean;
+  billingReference: boolean;
+  orderPlacer: boolean;
+  clientName: boolean;
+  clientId: boolean;
+  courier: boolean;
+  courierId: boolean;
+  originName: boolean;
+  originStreet: boolean;
+  originPostalCode: boolean;
+  destinationStreet: boolean;
+  destinationFloorStreetApt: boolean;
+  destinationPostalCode: boolean;
+  destinationZone: boolean;
+  deliveryStatus: boolean;
+  creationTime: boolean;
+  readyTime: boolean;
+  dueTime: boolean;
+  service: boolean;
+  rate: boolean;
+  paymentMethod: boolean;
+  deliveryFee: boolean;
+  extras: boolean;
+  deliveryNotes: boolean;
+  pod: boolean;
+  specialInstructions: boolean;
+}
+//job id,billing reference,order placer,client name,client id,courier,courier number,origin name,origin street,origin postal code,destination street,destination floor/suite/apt.,destination postal code,destination zone,delivery status,creation time,ready time,due time,service,rate,payment method as string,delivery fee,extras,delivery notes,pod,special instructions
+const columnDef = {
+    jobId: "job id",
+    billingReference: "billing reference",
+    orderPlacer: "order placer",
+    clientName: "client name",
+    clientId: "client id",
+    courier: "courier",
+    courierId: "courier number",
+    originName: "origin name",
+    originStreet: "origin street",
+    originPostalCode: "origin postal code",
+    destinationStreet: "destination street",
+    destinationFloorStreetApt: "destination floor/suite/apt.",
+    destinationPostalCode: "destination postal code",
+    destinationZone: "destination zone",
+    deliveryStatus: "delivery status",
+    creationTime: "creation time",
+    readyTime: "ready time",
+    dueTime: "due time",
+    service: "service",
+    rate: "rate",
+    paymentMethod: "payment method as string",
+    deliveryFee: "delivery fee",
+    extras: "extras",
+    deliveryNotes: "delivery notes",
+    pod: "pod",
+    specialInstructions: "special instructions",
+}
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
   const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
   const [clientIds, setClientIds] = useState<number[]>([]);
+  const [invoiceItems, setInvoiceItems] = useState<Columns>({
+    jobId: true,
+    billingReference: false,
+    orderPlacer: false,
+    clientName: false,
+    clientId: false,
+    courier: false,
+    courierId: false,
+    originName: false,
+    originStreet: false,
+    originPostalCode: false,
+    destinationStreet: false,
+    destinationFloorStreetApt: false,
+    destinationPostalCode: false,
+    destinationZone: false,
+    deliveryStatus: false,
+    creationTime: false,
+    readyTime: false,
+    dueTime: false,
+    service: false,
+    rate: false,
+    paymentMethod: false,
+    deliveryFee: false,
+    extras: false,
+    deliveryNotes: false,
+    pod: false,
+    specialInstructions: false,
+  });
 
   const unparseConfig: Papa.UnparseConfig = {
     quotes: false, //or array of booleans
@@ -119,7 +202,13 @@ function App() {
   function handleDownload() {
     for (let i in clientIds) {
       setTimeout(() => {
-        let csv = "job id,billing reference,order placer,client name,client id,courier,courier number,origin name,origin street,origin postal code,destination street,destination floor/suite/apt.,destination postal code,destination zone,delivery status,creation time,ready time,due time,service,rate,payment method as string,delivery fee,extras,delivery notes,pod,special instructions\n";
+        let csv = "";
+        for (let key in invoiceItems) {
+          if (invoiceItems[key as keyof Columns]) {
+            csv += columnDef[key as keyof Columns] + ',';
+          }
+        }
+        csv += "\n";
         csv += outputCSVs[i];
         const blob = new Blob([csv], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
@@ -156,8 +245,16 @@ function App() {
 
   useEffect(() => {
     const csvArray = [];
+
     for (let clientId of clientIds) {
-      const filtered = inputCSV.filter((x: Tag) => x.clientId === clientId);
+      //filter by clientID
+      let filtered: any = inputCSV.filter((x: any) => x.clientId === clientId);
+      //remove unwanted columns
+      for (let tag of filtered) {
+        for (let key in invoiceItems) {
+          if (invoiceItems[key as keyof Tag] === false ) delete tag[key];
+        }
+      }
       const csv = Papa.unparse(filtered, unparseConfig);
       csvArray.push(csv);
     }
@@ -170,35 +267,15 @@ function App() {
       <input type="file" id="csvupload" name="csvupload" accept="text/csv" onChange={handleLoad}></input>Load
       </label>
       <button className="button" onClick={handleDownload}>Download</button>
-      {/* {outputCSVs.map( (clientData, i) => 
+      {Object.keys(invoiceItems).map( (key, i) => 
         <div key={i}>
-          <pre>{clientData}</pre>
-          <hr></hr>
+          <label htmlFor="vehicle1">{key}</label>
+          <input type="checkbox" id={key} name={key} value={key} checked={invoiceItems[key as keyof Columns]} onChange={() => {
+            invoiceItems[key as keyof Columns] = !invoiceItems[key as keyof Columns];
+            setInvoiceItems({...invoiceItems});
+          }}></input>
         </div>
-      )} */}
-{/* 
-      <Card className="card">
-        <Card.Header></Card.Header>
-        <ListGroup variant="flush">
-          {inputCSV.map( (clientData, i) => 
-            <div key={i}>
-              <ListGroup.Item>
-                <div className="container text-center" style={{padding: '0'}}>
-                  <div className="row" style={{ padding: '0' }}>
-                    {Object.keys(clientData).map((key, i) =>
-                  
-                      <div className="col-xl-1" key={i} style={{ padding: '1em'}}>
-                        {clientData[key as keyof Tag]}
-                      </div>
-                    )}
-
-                  </div>
-                </div>
-              </ListGroup.Item>
-            </div>
-          )}
-        </ListGroup>
-      </Card> */}
+      )}
 
     </div>
   );
