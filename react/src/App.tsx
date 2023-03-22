@@ -8,20 +8,9 @@ import Logo from './components/Logo';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
-  // const [outputCSVs, setOutputCSVs] = useState<string[]>([]);
   const [clientMetaData, setclientMetaData] = useState<Client[]>([]);
   const [invoiceItems, setInvoiceItems] = useState<Columns>(invoiceItemsDefaults);
 
-  // const unparseConfig: Papa.UnparseConfig = {
-  //   quotes: false, //or array of booleans
-  //   quoteChar: '"',
-  //   escapeChar: '"',
-  //   delimiter: ",\t",
-  //   header: false,
-  //   newline: "\n",
-  //   skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
-  //   // columns: null //or array of strings
-  // }
   const parseConfig: Papa.ParseConfig = {
     delimiter: "",	// auto-detect
     quoteChar: '"',
@@ -41,8 +30,6 @@ function App() {
       const table: Tag[] = [];
       const _clientIds: number[] = [];
       const _clientMetaData: Client[] = [];
-   
-
       for (let tag of result.data) {
         const x: Tag = {
           jobId: +tag[0],
@@ -87,8 +74,7 @@ function App() {
     }
   }
 
-  function handleLoad(e: ChangeEvent<HTMLInputElement>) {
-          
+  function handleLoad(e: ChangeEvent<HTMLInputElement>) {      
     let fileList = e.target.files || [];
     if (fileList.length > 0) {
         console.log(fileList[0]);
@@ -99,7 +85,6 @@ function App() {
             Papa.parse(csv, parseConfig);
         };
     }
-
   }
 
   useEffect(() => {

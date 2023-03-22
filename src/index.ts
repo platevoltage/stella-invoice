@@ -24,8 +24,6 @@ const createWindow = () => {
     }
   });
 
-  // win.loadURL('https://platevoltage.github.io/stella-invoice/', {
-  // });
   win.loadFile(path.join(__dirname, './build/index.html')) 
 
   win.on('page-title-updated', function(e) {
@@ -34,7 +32,6 @@ const createWindow = () => {
   return win
       
 };
-
 
 
 app.whenReady().then(async () => {
@@ -55,8 +52,6 @@ app.whenReady().then(async () => {
 
 
 app.on('window-all-closed', () => {
-  // if (process.platform !== 'darwin') {
     app.quit();
-  // }
 });
 
