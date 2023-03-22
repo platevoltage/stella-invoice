@@ -4,6 +4,8 @@
   font-size: 1em;
   display: flex;
   /* flex-direction: column; */
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
 }
 
 .outer-container {
@@ -13,6 +15,7 @@
   width: 100vw;
   max-height: calc(100vh - 4em);
   min-height: 31em;
+  -webkit-app-region: no-drag;
 }
 
 .column {
