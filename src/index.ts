@@ -1,10 +1,12 @@
 import { app, BrowserWindow, Menu } from 'electron';
 import * as path from 'path';
 
+const isMac = process.platform === 'darwin';
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 780,
-    height: 600,
+    height: isMac ? 580 : 610,
     title: "Stella Invoice",
     // fullscreen: true,
     // kiosk: true,
@@ -13,11 +15,13 @@ const createWindow = () => {
     resizable: false,
     // maximizable: false,
     // movable: false,
-    titleBarStyle: "hiddenInset",
+    titleBarStyle: isMac ? "hiddenInset" : "default",
+    
     // useContentSize: true,
     // frame: false,
     // show: false,
     webPreferences: {
+      enableBlinkFeatures: "CSSColorSchemeUARendering",
       // nodeIntegration: false,
       // contextIsolation: true,
       // preload: path.join(__dirname, 'extensionScript.js')
@@ -43,11 +47,11 @@ app.whenReady().then(async () => {
     {
       label: app.name, 
       submenu: [
-       { label: "Quit", role: 'quit' }
+        { label: "Quit", role: 'quit' }
       ]
     }
   ]);
-  Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(isMac ? menu : null);
 })
 
 
