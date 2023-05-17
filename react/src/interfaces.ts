@@ -13,18 +13,19 @@ export interface Tag {
   destinationFloorStreetApt: string;
   destinationPostalCode: string;
   destinationZone: string;
-  // deliveryStatus: string;
-  // creationTime: string;
-  // readyTime: string;
-  // dueTime: string;
-  // service: string;
-  // rate: string;
-  // paymentMethod: string;
-  // deliveryFee: string;
-  // extras: string;
-  // deliveryNotes: string;
-  // pod: string;
-  // specialInstructions: string;
+  deliveryStatus: string;
+  creationTime: string;
+  readyTime: string;
+  dueTime: string;
+  service: string;
+  rate: string;
+  paymentMethod: string;
+  deliveryFee: string;
+  extras: string;
+  deliveryNotes: string;
+  pod: string;
+  specialInstructions: string;
+  excludeCanceled: string;
 
 }
 
@@ -43,18 +44,19 @@ export interface Columns {
   destinationFloorStreetApt: boolean;
   destinationPostalCode: boolean;
   destinationZone: boolean;
-  // deliveryStatus: boolean;
-  // creationTime: boolean;
-  // readyTime: boolean;
-  // dueTime: boolean;
-  // service: boolean;
-  // rate: boolean;
-  // paymentMethod: boolean;
-  // deliveryFee: boolean;
-  // extras: boolean;
-  // deliveryNotes: boolean;
-  // pod: boolean;
-  // specialInstructions: boolean;
+  deliveryStatus: boolean;
+  creationTime: boolean;
+  readyTime: boolean;
+  dueTime: boolean;
+  service: boolean;
+  rate: boolean;
+  paymentMethod: boolean;
+  deliveryFee: boolean;
+  extras: boolean;
+  deliveryNotes: boolean;
+  pod: boolean;
+  specialInstructions: boolean;
+  excludeCanceled: boolean;
 }
 
 export interface Client {
@@ -77,18 +79,19 @@ export const columnDef = {
     destinationFloorStreetApt: "destination floor/suite/apt.",
     destinationPostalCode: "destination postal code",
     destinationZone: "destination zone",
-    // deliveryStatus: "delivery status",
-    // creationTime: "creation time",
-    // readyTime: "ready time",
-    // dueTime: "due time",
-    // service: "service",
-    // rate: "rate",
-    // paymentMethod: "payment method as string",
-    // deliveryFee: "delivery fee",
-    // extras: "extras",
-    // deliveryNotes: "delivery notes",
-    // pod: "pod",
-    // specialInstructions: "special instructions",
+    deliveryStatus: "delivery status",
+    creationTime: "creation time",
+    readyTime: "ready time",
+    dueTime: "due time",
+    service: "service",
+    rate: "rate",
+    paymentMethod: "payment method as string",
+    deliveryFee: "delivery fee",
+    extras: "extras",
+    deliveryNotes: "delivery notes",
+    pod: "pod",
+    specialInstructions: "special instructions",
+    excludeCanceled: "exclude canceled",
 }
 
 export const invoiceItemsDefaults = {
@@ -106,16 +109,17 @@ export const invoiceItemsDefaults = {
     destinationFloorStreetApt: true,
     destinationPostalCode: true,
     destinationZone: true,
-    // deliveryStatus: true,
-    // creationTime: true,
-    // readyTime: true,
-    // dueTime: true,
-    // service: true,
-    // rate: true,
-    // paymentMethod: true,
-    // deliveryFee: true,
-    // extras: true,
-    // deliveryNotes: true,
-    // pod: true,
-    // specialInstructions: true,
+    deliveryStatus: true,
+    creationTime: true,
+    readyTime: true,
+    dueTime: true,
+    service: true,
+    rate: true,
+    paymentMethod: true,
+    deliveryFee: true,
+    extras: true,
+    deliveryNotes: true,
+    pod: true,
+    specialInstructions: true,
+    excludeCanceled: true,
   }

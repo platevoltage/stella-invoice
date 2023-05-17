@@ -46,18 +46,19 @@ function App() {
           destinationFloorStreetApt: tag[11].trim(),//
           destinationPostalCode: tag[12].trim(),//
           destinationZone: tag[13].trim(),//
-          // deliveryStatus: tag[14].trim(),
-          // creationTime: tag[15].trim(),
-          // readyTime: tag[16].trim(),
-          // dueTime: tag[17].trim(),
-          // service: tag[18].trim(),
-          // rate: tag[19].trim(),
-          // paymentMethod: tag[20].trim(),
-          // deliveryFee: tag[21].trim(),
-          // extras: tag[22].trim(),
-          // deliveryNotes: tag[23].trim(),
-          // pod: tag[24].trim(),
-          // specialInstructions: tag[25].trim(),
+          deliveryStatus: tag[14].trim(),
+          creationTime: tag[15].trim(),
+          readyTime: tag[16].trim(),
+          dueTime: tag[17].trim(),
+          service: tag[18].trim(),
+          rate: tag[19].trim(),
+          paymentMethod: tag[20].trim(),
+          deliveryFee: tag[21].trim(),
+          extras: tag[22].trim(),
+          deliveryNotes: tag[23].trim(),
+          pod: tag[24].trim(),
+          specialInstructions: tag[25].trim(),
+          excludeCanceled: tag[26].trim(),
         };
         table.push(x);
         if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {
