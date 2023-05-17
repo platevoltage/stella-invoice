@@ -30,35 +30,38 @@ function App() {
       const table: Tag[] = [];
       const _clientIds: number[] = [];
       const _clientMetaData: Client[] = [];
+      // console.log(result.data);
       for (let tag of result.data) {
         const x: Tag = {
           jobId: +tag[0],//
-          billingReference: tag[1].trim(),//
-          orderPlacer: tag[2].trim(),//
-          clientName: tag[3].trim(),//
-          clientId: +tag[4],//
-          courier: tag[5].trim(),//
-          courierId: +tag[6],//
-          originName: tag[7].trim(),//
-          originStreet: tag[8].trim(),//
-          originPostalCode: tag[9].trim(),//
-          destinationStreet: tag[10].trim(),//
-          destinationFloorStreetApt: tag[11].trim(),//
-          destinationPostalCode: tag[12].trim(),//
-          destinationZone: tag[13].trim(),//
-          deliveryStatus: tag[14].trim(),
-          creationTime: tag[15].trim(),
-          readyTime: tag[16].trim(),
-          dueTime: tag[17].trim(),
-          service: tag[18].trim(),
-          rate: tag[19].trim(),
-          paymentMethod: tag[20].trim(),
-          deliveryFee: tag[21].trim(),
-          extras: tag[22].trim(),
-          deliveryNotes: tag[23].trim(),
-          pod: tag[24].trim(),
-          specialInstructions: tag[25].trim(),
-          excludeCanceled: tag[26].trim(),
+          billingReference: (tag[1] || "").trim(),//
+          orderPlacer: (tag[2] || "").trim(),//
+          accountName: (tag[3] || "").trim(),
+          clientName: (tag[4] || "").trim(),//
+          clientId: +tag[5],//
+          courier: (tag[6] || "").trim(),//
+          courierId: +tag[7],//
+          originName: (tag[8] || "").trim(),//
+          originStreet: (tag[9] || "").trim(),//
+          originPostalCode: (tag[10] || "").trim(),//
+          destinationName: (tag[11] || "").trim(),//
+          destinationStreet: (tag[12] || "").trim(),//
+          destinationFloorStreetApt: (tag[13] || "").trim(),//
+          destinationPostalCode: (tag[14] || "").trim(),//
+          destinationZone: (tag[15] || "").trim(),//
+          deliveryStatus: (tag[16] || "").trim(),
+          creationTime: (tag[17] || "").trim(),
+          readyTime: (tag[18] || "").trim(),
+          dueTime: (tag[19] || "").trim(),
+          service: (tag[20] || "").trim(),
+          rate: (tag[21] || "").trim(),
+          paymentMethod: (tag[22] || "").trim(),
+          deliveryFee: (tag[23] || "").trim(),
+          extras: (tag[24] || "").trim(),
+          deliveryNotes: (tag[25] || "").trim(),
+          pod: (tag[26] || "").trim(),
+          specialInstructions: (tag[27] || "").trim(),
+          // excludeCanceled: tag[26].trim(),
         };
         table.push(x);
         if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {

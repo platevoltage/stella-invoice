@@ -2,6 +2,7 @@ export interface Tag {
   jobId: number;
   billingReference: string;
   orderPlacer: string;
+  accountName: string;
   clientName: string;
   clientId: number;
   courier: string;
@@ -9,6 +10,7 @@ export interface Tag {
   originName: string;
   originStreet: string;
   originPostalCode: string;
+  destinationName: string;
   destinationStreet: string;
   destinationFloorStreetApt: string;
   destinationPostalCode: string;
@@ -25,7 +27,7 @@ export interface Tag {
   deliveryNotes: string;
   pod: string;
   specialInstructions: string;
-  excludeCanceled: string;
+  // excludeCanceled: string;
 
 }
 
@@ -33,6 +35,7 @@ export interface Columns {
   jobId: boolean;
   billingReference: boolean;
   orderPlacer: boolean;
+  accountName: boolean;
   clientName: boolean;
   clientId: boolean;
   courier: boolean;
@@ -40,6 +43,7 @@ export interface Columns {
   originName: boolean;
   originStreet: boolean;
   originPostalCode: boolean;
+  destinationName: boolean;
   destinationStreet: boolean;
   destinationFloorStreetApt: boolean;
   destinationPostalCode: boolean;
@@ -56,7 +60,7 @@ export interface Columns {
   deliveryNotes: boolean;
   pod: boolean;
   specialInstructions: boolean;
-  excludeCanceled: boolean;
+  // excludeCanceled: boolean;
 }
 
 export interface Client {
@@ -68,6 +72,7 @@ export const columnDef = {
     jobId: "job id",
     billingReference: "billing reference",
     orderPlacer: "order placer",
+    accountName: "account name",
     clientName: "client name",
     clientId: "client id",
     courier: "courier",
@@ -75,6 +80,7 @@ export const columnDef = {
     originName: "origin name",
     originStreet: "origin street",
     originPostalCode: "origin postal code",
+    destinationName: "destination name",
     destinationStreet: "destination street",
     destinationFloorStreetApt: "destination floor/suite/apt.",
     destinationPostalCode: "destination postal code",
@@ -91,13 +97,14 @@ export const columnDef = {
     deliveryNotes: "delivery notes",
     pod: "pod",
     specialInstructions: "special instructions",
-    excludeCanceled: "exclude canceled",
+    // excludeCanceled: "exclude canceled",
 }
 
 export const invoiceItemsDefaults = {
     jobId: true,
     billingReference: true,
     orderPlacer: true,
+    accountName: true,
     clientName: true,
     clientId: true,
     courier: true,
@@ -105,6 +112,7 @@ export const invoiceItemsDefaults = {
     originName: true,
     originStreet: true,
     originPostalCode: true,
+    destinationName: true,
     destinationStreet: true,
     destinationFloorStreetApt: true,
     destinationPostalCode: true,
@@ -121,5 +129,5 @@ export const invoiceItemsDefaults = {
     deliveryNotes: true,
     pod: true,
     specialInstructions: true,
-    excludeCanceled: true,
+    // excludeCanceled: true,
   }
