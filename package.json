@@ -1,6 +1,6 @@
 {
   "name": "stella-invoice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "author": "Garrett Corbin <jgarrettcorbin@gmail.com> (https://jgarrettcorbin.com)",
   "main": "dist/index.js",
