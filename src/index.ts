@@ -4,7 +4,7 @@ import * as path from 'path';
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 780,
-    height: 550,
+    height: 600,
     title: "Stella Invoice",
     // fullscreen: true,
     // kiosk: true,
