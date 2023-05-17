@@ -32,32 +32,32 @@ function App() {
       const _clientMetaData: Client[] = [];
       for (let tag of result.data) {
         const x: Tag = {
-          jobId: +tag[0],
-          billingReference: tag[1].trim(),
-          orderPlacer: tag[2].trim(),
-          clientName: tag[3].trim(),
-          clientId: +tag[4],
-          courier: tag[5].trim(),
-          courierId: +tag[6],
-          originName: tag[7].trim(),
-          originStreet: tag[8].trim(),
-          originPostalCode: tag[9].trim(),
-          destinationStreet: tag[10].trim(),
-          destinationFloorStreetApt: tag[11].trim(),
-          destinationPostalCode: tag[12].trim(),
-          destinationZone: tag[13].trim(),
-          deliveryStatus: tag[14].trim(),
-          creationTime: tag[15].trim(),
-          readyTime: tag[16].trim(),
-          dueTime: tag[17].trim(),
-          service: tag[18].trim(),
-          rate: tag[19].trim(),
-          paymentMethod: tag[20].trim(),
-          deliveryFee: tag[21].trim(),
-          extras: tag[22].trim(),
-          deliveryNotes: tag[23].trim(),
-          pod: tag[24].trim(),
-          specialInstructions: tag[25].trim(),
+          jobId: +tag[0],//
+          billingReference: tag[1].trim(),//
+          orderPlacer: tag[2].trim(),//
+          clientName: tag[3].trim(),//
+          clientId: +tag[4],//
+          courier: tag[5].trim(),//
+          courierId: +tag[6],//
+          originName: tag[7].trim(),//
+          originStreet: tag[8].trim(),//
+          originPostalCode: tag[9].trim(),//
+          destinationStreet: tag[10].trim(),//
+          destinationFloorStreetApt: tag[11].trim(),//
+          destinationPostalCode: tag[12].trim(),//
+          destinationZone: tag[13].trim(),//
+          // deliveryStatus: tag[14].trim(),
+          // creationTime: tag[15].trim(),
+          // readyTime: tag[16].trim(),
+          // dueTime: tag[17].trim(),
+          // service: tag[18].trim(),
+          // rate: tag[19].trim(),
+          // paymentMethod: tag[20].trim(),
+          // deliveryFee: tag[21].trim(),
+          // extras: tag[22].trim(),
+          // deliveryNotes: tag[23].trim(),
+          // pod: tag[24].trim(),
+          // specialInstructions: tag[25].trim(),
         };
         table.push(x);
         if (!(_clientIds.includes(x.clientId)) && !isNaN(x.clientId)) {
