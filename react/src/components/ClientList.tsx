@@ -12,8 +12,8 @@ interface Props {
 const unparseConfig: Papa.UnparseConfig = {
     quotes: false, //or array of booleans
     quoteChar: '"',
-    escapeChar: '"',
-    delimiter: ",\t",
+    escapeChar: '',
+    delimiter: ",",
     header: false,
     newline: "\n",
     skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
@@ -32,14 +32,17 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
         const object: object = {};
         for (let key in invoiceItems) {
           if (invoiceItems[key as keyof Tag] === true ) {
+            const value = tag[key as keyof Tag];
             Object.defineProperty(object, key, {
-              value: tag[key as keyof Tag],
+              // value: typeof value === 'string' && value.includes(',') ? `"${value}"` : value ,
+              value,
               enumerable: true
             })
           };
         }
         output.push(object);
       }
+      console.log(output);
       const csv = Papa.unparse(output, unparseConfig);
       csvArray.push(csv);
     }

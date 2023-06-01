@@ -2,7 +2,7 @@ export interface Tag {
   jobId: number;
   billingReference: string;
   orderPlacer: string;
-  accountName: string;
+  // accountName: string;
   clientName: string;
   clientId: number;
   courier: string;
@@ -35,7 +35,7 @@ export interface Columns {
   jobId: boolean;
   billingReference: boolean;
   orderPlacer: boolean;
-  accountName: boolean;
+  // accountName: boolean;
   clientName: boolean;
   clientId: boolean;
   courier: boolean;
@@ -72,7 +72,7 @@ export const columnDef = {
     jobId: "job id",
     billingReference: "billing reference",
     orderPlacer: "order placer",
-    accountName: "account name",
+    // accountName: "account name",
     clientName: "client name",
     clientId: "client id",
     courier: "courier",
@@ -104,7 +104,7 @@ export const invoiceItemsDefaults = {
     jobId: true,
     billingReference: true,
     orderPlacer: true,
-    accountName: true,
+    // accountName: true,
     clientName: true,
     clientId: true,
     courier: true,
