@@ -24,6 +24,7 @@ const unparseConfig: Papa.UnparseConfig = {
 
 export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Props) {
   const [showInvoice, setShowInvoice] = useState(false);
+  const [invoiceData, setInvoiceData] = useState({name: "Test Name", data: [{}]});
   function processInvoices() {
     const csvArray = [];
     for (let client of clientMetaData) {
@@ -55,6 +56,14 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
 
   function handleInvoice(_: any, index: number) {
     setShowInvoice(true);
+    const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === clientMetaData[index].id);
+    
+    const invoiceData = {
+      name: clientMetaData[index].name,
+      data: filtered
+    }
+    console.log(JSON.stringify(invoiceData, null, 2));
+    setInvoiceData(invoiceData);
   }
 
   function handleDownload(_: any, index = -1) {
@@ -116,9 +125,8 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
             {client.name}
         </div>
         )}
-        {
-          showInvoice && <Invoice />
-        }
+
+        { showInvoice && <Invoice invoiceData={invoiceData} /> }
     </div>
   )
 }
