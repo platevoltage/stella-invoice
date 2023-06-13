@@ -1,17 +1,14 @@
-import {
-    Document,
-    Page,
-    Text,
-    View,
-    StyleSheet,
-    PDFViewer,
-    Image
-} from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from "@react-pdf/renderer";
 import { Tag } from "../interfaces";
+
 interface Props {
     invoiceData: any;
 }
-// Create styles
+
+interface ReducedTag extends Tag {
+    qty: number;
+}
+
 const styles = StyleSheet.create({
     page: {
       backgroundColor: "#ffffff",
@@ -25,16 +22,11 @@ const styles = StyleSheet.create({
         margin: 30,
         padding: 10,
         fontSize: 8,
-        // width: "40%",
-        // backgroundColor: "#555555",
-        // position: "absolute"
     },
     headerRight: {
         margin: 30,
         paddingRight: 10,
         fontSize: 8,
-        // width: "40%",
-        // backgroundColor: "#444444",
         position: "absolute",
         right: "0"
     },
@@ -48,9 +40,6 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         padding: 10,
         fontSize: 8,
-        // width: "40%",
-        // backgroundColor: "#555555",
-        // position: "absolute"
     },
     billToRight: {
         marginRight: 30,
@@ -58,9 +47,6 @@ const styles = StyleSheet.create({
         fontSize: 8,
         position: "absolute",
         right: "0"
-        // width: "40%",
-        // backgroundColor: "#555555",
-        // position: "absolute"
     },
     line: {
         marginLeft: 30,
@@ -82,7 +68,6 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         marginTop: 30,
-        // height: 16,
         fontSize: 8,
         backgroundColor: '#dce9f2',
         color: '#5090bc', 
@@ -91,11 +76,7 @@ const styles = StyleSheet.create({
     tableRow: {
         marginLeft: 15,
         marginRight: 15,
-        // marginTop: 0,
-        // height: ,
-        fontSize: 10,
-        // backgroundColor: '#dce9f2',
-        // color: '#5090bc', 
+        fontSize: 10, 
         position: "relative"
     },
     dateColumn: {
@@ -105,7 +86,6 @@ const styles = StyleSheet.create({
     },
     descriptionColumn: {
         padding: 3,
-        // position: "absolute",
         left: 180,
         width: 160
     },
@@ -134,9 +114,6 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 10,
         width: "40%",
-        // whiteSpace: "wrap",
-        // backgroundColor: "#555555",
-        // position: "absolute"
     },
     totalRight: {
         position: "absolute",
@@ -145,9 +122,6 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 10,
         width: "40%",
-        // whiteSpace: "wrap",
-        // backgroundColor: "#555555",
-        // position: "absolute"
     },
     price: {
         margin: 8,
@@ -174,8 +148,22 @@ const styles = StyleSheet.create({
 function Invoice({invoiceData}: Props) {
     let total: number = 0;
     const data: Tag[] = invoiceData.data;
-    for (let line of data) {
-        total += parseFloat(line.deliveryFee)
+    const dataReduced: ReducedTag[] = []; 
+    for (let tag of data) {
+        total += parseFloat(tag.deliveryFee);
+        let identicalTag = false;
+        for (let tagReduced of dataReduced) {
+            if (tagReduced.destinationName === tag.destinationName &&
+                tagReduced.destinationStreet === tag.destinationStreet &&
+                tagReduced.originStreet === tag.originStreet &&
+                tagReduced.deliveryFee === tag.deliveryFee
+            ) {
+                tagReduced.qty++;
+                identicalTag = true;
+                break;
+            }
+        }
+        if (!identicalTag) dataReduced.push({...tag, qty: 1});
     }
     
     return (
@@ -233,7 +221,7 @@ function Invoice({invoiceData}: Props) {
                             <Text>AMOUNT</Text>
                         </View>
                     </View>
-                    {invoiceData.data.map((line: any, index: number) =>
+                    {dataReduced.map((line: any, index: number) =>
                     <View style={styles.tableRow}>
                         <View style={styles.dateColumn}>
                             <Text>{line.creationTime}</Text>
@@ -243,13 +231,13 @@ function Invoice({invoiceData}: Props) {
                             <Text>{line.extras}</Text>
                         </View>
                         <View style={styles.qtyColumn}>
-                            <Text>xx</Text>
+                            <Text>{line.qty}</Text>
                         </View>
                         <View style={styles.rateColumn}>
-                            <Text>{line.deliveryFee}</Text>
+                            <Text>${ (line.deliveryFee * 1).toFixed(2) }</Text>
                         </View>
                         <View style={styles.amountColumn}>
-                            <Text>{line.deliveryFee}</Text>
+                            <Text>${ (line.deliveryFee * line.qty).toFixed(2) }</Text>
                         </View>
                     </View>
                     )}
