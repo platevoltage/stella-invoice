@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, PDFViewer, Image, Font } from "@react-pdf/renderer";
 import { Tag } from "../interfaces";
 
 interface Props {
@@ -6,13 +6,18 @@ interface Props {
 }
 
 interface ReducedTag extends Tag {
+    type: string;
     qty: number;
 }
 
 const styles = StyleSheet.create({
     page: {
+      fontFamily: 'Helvetica',
       backgroundColor: "#ffffff",
       color: "black",
+    },
+    bold: {
+      fontFamily: 'Helvetica-Bold',
     },
     section: {
       margin: 10,
@@ -21,7 +26,7 @@ const styles = StyleSheet.create({
     headerLeft: {
         margin: 30,
         padding: 10,
-        fontSize: 8,
+        fontSize: 10,
     },
     headerRight: {
         margin: 30,
@@ -37,16 +42,18 @@ const styles = StyleSheet.create({
         color: "#5090bc"
     },
     billToLeft: {
-        marginLeft: 30,
-        padding: 10,
-        fontSize: 8,
+        marginLeft: 40,
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 10,
     },
     billToRight: {
-        marginRight: 30,
-        padding: 10,
-        fontSize: 8,
+        marginTop: 10,
+        // marginRight: 60,
+        fontSize: 10,
         position: "absolute",
-        right: "0"
+        right: 90,
+        // border: "1px solid red"
     },
     line: {
         marginLeft: 30,
@@ -83,6 +90,12 @@ const styles = StyleSheet.create({
         padding: 3,
         position: "absolute",
         left: 14
+    },
+    typeColumn: {
+        padding: 3,
+        position: "absolute",
+        left: 70,
+        width: 100
     },
     descriptionColumn: {
         padding: 3,
@@ -156,18 +169,19 @@ function Invoice({invoiceData}: Props) {
     for (let tag of data) {
         total += parseFloat(tag.deliveryFee);
         let identicalTag = false;
-        // for (let tagReduced of dataReduced) {
-        //     if (tagReduced.destinationName === tag.destinationName &&
-        //         tagReduced.destinationStreet === tag.destinationStreet &&
-        //         tagReduced.originStreet === tag.originStreet &&
-        //         tagReduced.deliveryFee === tag.deliveryFee
-        //     ) {
-        //         tagReduced.qty++;
-        //         identicalTag = true;
-        //         break;
-        //     }
-        // }
-        if (!identicalTag) dataReduced.push({...tag, qty: 1});
+        for (let tagReduced of dataReduced) {
+            if (tagReduced.destinationName === tag.destinationName &&
+                tagReduced.destinationStreet === tag.destinationStreet &&
+                tagReduced.originStreet === tag.originStreet &&
+                tagReduced.deliveryFee === tag.deliveryFee &&
+                tagReduced.creationTime === tag.creationTime
+            ) {
+                tagReduced.qty++;
+                identicalTag = true;
+                break;
+            }
+        }
+        if (!identicalTag) dataReduced.push({...tag, qty: 1, type: "SF Messenger\n Service"});
     }
     
     return (
@@ -192,16 +206,24 @@ function Invoice({invoiceData}: Props) {
                     </View>
                     <View>
                         <View style={styles.billToLeft}>
-                            <Text>BILL TO</Text>
+                            <Text style={styles.bold}>BILL TO</Text>
                             <Text>{invoiceData.name}</Text>
                             <Text> </Text>
                             <Text> </Text>
                         </View>
                         <View style={styles.billToRight}>
-                            <Text>INVOICE# xxxx</Text>
-                            <Text>DATE {date.toLocaleDateString()}</Text>
-                            <Text>DUE DATE {dueDate.toLocaleDateString()}</Text>
-                            <Text>TERMS xxxx</Text>
+                            <View style={{position: "absolute", width: 80, right: 4, textAlign: 'right', ...styles.bold}}>
+                                <Text>INVOICE#</Text>
+                                <Text>DATE</Text>
+                                <Text>DUE DATE</Text>
+                                <Text>TERMS</Text>
+                            </View>
+                            <View style={{position: "absolute",width: 80, left: 0}}>
+                                <Text>xxxx</Text>
+                                <Text>{date.toLocaleDateString()}</Text>
+                                <Text>{dueDate.toLocaleDateString()}</Text>
+                                <Text>xxxx</Text>
+                            </View>
                         </View>
                         
                     </View>
@@ -229,6 +251,9 @@ function Invoice({invoiceData}: Props) {
                     <View style={styles.tableRow}>
                         <View style={styles.dateColumn}>
                             <Text>{(new Date(line.creationTime)).toLocaleDateString()}</Text>
+                        </View>
+                        <View style={styles.typeColumn}>
+                            <Text>{line.type}</Text>
                         </View>
                         <View style={styles.descriptionColumn}>
                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}</Text>
