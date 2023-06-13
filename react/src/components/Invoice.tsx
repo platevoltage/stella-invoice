@@ -156,17 +156,17 @@ function Invoice({invoiceData}: Props) {
     for (let tag of data) {
         total += parseFloat(tag.deliveryFee);
         let identicalTag = false;
-        for (let tagReduced of dataReduced) {
-            if (tagReduced.destinationName === tag.destinationName &&
-                tagReduced.destinationStreet === tag.destinationStreet &&
-                tagReduced.originStreet === tag.originStreet &&
-                tagReduced.deliveryFee === tag.deliveryFee
-            ) {
-                tagReduced.qty++;
-                identicalTag = true;
-                break;
-            }
-        }
+        // for (let tagReduced of dataReduced) {
+        //     if (tagReduced.destinationName === tag.destinationName &&
+        //         tagReduced.destinationStreet === tag.destinationStreet &&
+        //         tagReduced.originStreet === tag.originStreet &&
+        //         tagReduced.deliveryFee === tag.deliveryFee
+        //     ) {
+        //         tagReduced.qty++;
+        //         identicalTag = true;
+        //         break;
+        //     }
+        // }
         if (!identicalTag) dataReduced.push({...tag, qty: 1});
     }
     
