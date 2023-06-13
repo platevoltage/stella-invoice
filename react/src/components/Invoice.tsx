@@ -147,6 +147,10 @@ const styles = StyleSheet.create({
   // Create Document Component
 function Invoice({invoiceData}: Props) {
     let total: number = 0;
+    const date = new Date();
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + 14);
+
     const data: Tag[] = invoiceData.data;
     const dataReduced: ReducedTag[] = []; 
     for (let tag of data) {
@@ -195,8 +199,8 @@ function Invoice({invoiceData}: Props) {
                         </View>
                         <View style={styles.billToRight}>
                             <Text>INVOICE# xxxx</Text>
-                            <Text>DATE xxxx</Text>
-                            <Text>DUE DATE xxxx</Text>
+                            <Text>DATE {date.toLocaleDateString()}</Text>
+                            <Text>DUE DATE {dueDate.toLocaleDateString()}</Text>
                             <Text>TERMS xxxx</Text>
                         </View>
                         
@@ -224,7 +228,7 @@ function Invoice({invoiceData}: Props) {
                     {dataReduced.map((line: any, index: number) =>
                     <View style={styles.tableRow}>
                         <View style={styles.dateColumn}>
-                            <Text>{line.creationTime}</Text>
+                            <Text>{(new Date(line.creationTime)).toLocaleDateString()}</Text>
                         </View>
                         <View style={styles.descriptionColumn}>
                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}</Text>
