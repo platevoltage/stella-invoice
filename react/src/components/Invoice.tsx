@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     descriptionColumn: {
         padding: 3,
         // position: "absolute",
-        left: 180
+        left: 180,
+        width: 160
     },
     qtyColumn: {
         padding: 3,
@@ -232,41 +233,26 @@ function Invoice({invoiceData}: Props) {
                             <Text>AMOUNT</Text>
                         </View>
                     </View>
-
+                    {invoiceData.data.map((line: any, index: number) =>
                     <View style={styles.tableRow}>
                         <View style={styles.dateColumn}>
-                            <Text>xx/xx/xxxx</Text>
+                            <Text>{line.creationTime}</Text>
                         </View>
                         <View style={styles.descriptionColumn}>
-                            <Text>xxxxxx{"\n"}XXXXXX{"\n"}XXXXXX</Text>
+                            <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}</Text>
+                            <Text>{line.extras}</Text>
                         </View>
                         <View style={styles.qtyColumn}>
                             <Text>xx</Text>
                         </View>
                         <View style={styles.rateColumn}>
-                            <Text>xx.xx</Text>
+                            <Text>{line.deliveryFee}</Text>
                         </View>
                         <View style={styles.amountColumn}>
-                            <Text>xx.xx</Text>
+                            <Text>{line.deliveryFee}</Text>
                         </View>
                     </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.dateColumn}>
-                            <Text>xx/xx/xxxx</Text>
-                        </View>
-                        <View style={styles.descriptionColumn}>
-                            <Text>xxxxxx{"\n"}XXXXXX</Text>
-                        </View>
-                        <View style={styles.qtyColumn}>
-                            <Text>xx</Text>
-                        </View>
-                        <View style={styles.rateColumn}>
-                            <Text>xx.xx</Text>
-                        </View>
-                        <View style={styles.amountColumn}>
-                            <Text>xx.xx</Text>
-                        </View>
-                    </View>
+                    )}
                     <View style={styles.dottedLine} />
                     <View style={styles.totalRow}>
                         <View style={styles.totalLeft}>
@@ -278,7 +264,7 @@ function Invoice({invoiceData}: Props) {
                         <View style={styles.totalRight}>
                             <Text>BALANCE DUE</Text>
                             <View style={styles.price}>
-                                <Text>$XXX.XX</Text>
+                                <Text>${total.toFixed(2)}</Text>
                             </View>
                         </View>
                     </View>
