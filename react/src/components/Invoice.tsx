@@ -72,16 +72,17 @@ const styles = StyleSheet.create({
     dottedLine: {
         marginLeft: 30,
         marginRight: 30,
+        marginTop: 20,
         height: 0,
         borderTopWidth: 1, 
         borderStyle: "dashed",
-        borderColor: '#888888', 
+        borderColor: '#bbbbbb', 
     },
     tableHeader: {
         marginLeft: 15,
         marginRight: 15,
         marginTop: 30,
-        height: 16,
+        // height: 16,
         fontSize: 8,
         backgroundColor: '#dce9f2',
         color: '#5090bc', 
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     },
     descriptionColumn: {
         padding: 3,
-        position: "absolute",
+        // position: "absolute",
         left: 180
     },
     qtyColumn: {
@@ -115,14 +116,45 @@ const styles = StyleSheet.create({
     rateColumn: {
         padding: 3,
         position: "absolute",
-        left: 420
+        right: 110,
+        textAlign: "right",
     },
     amountColumn: {
         padding: 3,
         position: "absolute",
-        left: 500
+        right: 26,
+        textAlign: "right",
     },
-
+    totalRow: {
+        position: "relative",
+    },
+    totalLeft: {
+        marginLeft: 30,
+        padding: 10,
+        fontSize: 10,
+        width: "40%",
+        // whiteSpace: "wrap",
+        // backgroundColor: "#555555",
+        // position: "absolute"
+    },
+    totalRight: {
+        position: "absolute",
+        right: 0,
+        marginRight: 30,
+        padding: 10,
+        fontSize: 10,
+        width: "40%",
+        // whiteSpace: "wrap",
+        // backgroundColor: "#555555",
+        // position: "absolute"
+    },
+    price: {
+        margin: 8,
+        position: "absolute", 
+        right: 0,
+        fontSize: 20,
+    },
+    
     totalText: {
         margin: 10,
         padding: 10,
@@ -178,6 +210,7 @@ function Invoice({invoiceData}: Props) {
                             <Text>DUE DATE xxxx</Text>
                             <Text>TERMS xxxx</Text>
                         </View>
+                        
                     </View>
                     <View style={styles.line} />
                     <View style={styles.tableHeader}>
@@ -205,7 +238,7 @@ function Invoice({invoiceData}: Props) {
                             <Text>xx/xx/xxxx</Text>
                         </View>
                         <View style={styles.descriptionColumn}>
-                            <Text>xxxxxx</Text>
+                            <Text>xxxxxx{"\n"}XXXXXX{"\n"}XXXXXX</Text>
                         </View>
                         <View style={styles.qtyColumn}>
                             <Text>xx</Text>
@@ -217,7 +250,38 @@ function Invoice({invoiceData}: Props) {
                             <Text>xx.xx</Text>
                         </View>
                     </View>
-                    {/* <View style={styles.dottedLine} /> */}
+                    <View style={styles.tableRow}>
+                        <View style={styles.dateColumn}>
+                            <Text>xx/xx/xxxx</Text>
+                        </View>
+                        <View style={styles.descriptionColumn}>
+                            <Text>xxxxxx{"\n"}XXXXXX</Text>
+                        </View>
+                        <View style={styles.qtyColumn}>
+                            <Text>xx</Text>
+                        </View>
+                        <View style={styles.rateColumn}>
+                            <Text>xx.xx</Text>
+                        </View>
+                        <View style={styles.amountColumn}>
+                            <Text>xx.xx</Text>
+                        </View>
+                    </View>
+                    <View style={styles.dottedLine} />
+                    <View style={styles.totalRow}>
+                        <View style={styles.totalLeft}>
+                            <Text>We appreciate your business ! Please contact</Text>
+                            <Text>us at office@stellacourier for any question or</Text>
+                            <Text>to place future orders. If you wish to open an</Text>
+                            <Text>account with Stella Courier please email info@stellacourier.com</Text>
+                        </View>
+                        <View style={styles.totalRight}>
+                            <Text>BALANCE DUE</Text>
+                            <View style={styles.price}>
+                                <Text>$XXX.XX</Text>
+                            </View>
+                        </View>
+                    </View>
                     {/* <View style={styles.smallText}>
                         {invoiceData.data.map((line: any, index: number) =>
                             <div key={index}>
