@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     qtyColumn: {
         padding: 3,
         position: "absolute",
-        left: 360
+        right: 180,
+        textAlign: "right",
     },
     rateColumn: {
         padding: 3,
