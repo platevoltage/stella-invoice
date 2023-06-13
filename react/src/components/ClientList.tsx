@@ -16,7 +16,7 @@ const unparseConfig: Papa.UnparseConfig = {
     quoteChar: '"',
     escapeChar: '',
     delimiter: ",",
-    header: false,
+    header: true,
     newline: "\n",
     skipEmptyLines: false, //other option is 'greedy', meaning skip delimiters, quotes, and whitespace.
     // columns: null //or array of strings
@@ -25,6 +25,7 @@ const unparseConfig: Papa.UnparseConfig = {
 export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Props) {
   const [showInvoice, setShowInvoice] = useState(false);
   const [invoiceData, setInvoiceData] = useState({name: "Test Name", data: [{}]});
+
   function processInvoices() {
     const csvArray = [];
     for (let client of clientMetaData) {
@@ -37,7 +38,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
         for (let key in invoiceItems) {
           if (invoiceItems[key as keyof Tag] === true ) {
             const value = tag[key as keyof Tag];
-            Object.defineProperty(object, key, {
+            Object.defineProperty(object, columnDef[key as keyof Tag], {
               // value: typeof value === 'string' && value.includes(',') ? `"${value}"` : value ,
               value,
               enumerable: true
@@ -82,12 +83,12 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
 
   function downloadFile(csvArray: string[], i: number) {
         let csv = "";
-        for (let key in invoiceItems) {
-          if (invoiceItems[key as keyof Columns]) {
-            csv += columnDef[key as keyof Columns] + ',';
-          }
-        }
-        csv += "\n" + csvArray[i];
+        // for (let key in invoiceItems) {
+        //   if (invoiceItems[key as keyof Columns]) {
+        //     csv += columnDef[key as keyof Columns] + ',';
+        //   }
+        // }
+        csv += csvArray[i];
         const blob = new Blob([csv], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");

@@ -2,7 +2,7 @@ export interface Tag {
   jobId: number;
   billingReference: string;
   orderPlacer: string;
-  // accountName: string;
+  // accountName?: string;
   clientName: string;
   clientId: number;
   courier: string;
@@ -72,7 +72,7 @@ export const columnDef = {
     jobId: "job id",
     billingReference: "billing reference",
     orderPlacer: "order placer",
-    // accountName: "account name",
+    accountName: "account name",
     clientName: "client name",
     clientId: "client id",
     courier: "courier",
@@ -97,8 +97,40 @@ export const columnDef = {
     deliveryNotes: "delivery notes",
     pod: "pod",
     specialInstructions: "special instructions",
-    // excludeCanceled: "exclude canceled",
+    excludeCanceled: "exclude canceled",
 }
+
+// export const reversedColumnDef = {
+//   "job id": "jobId",
+//   "billing reference": "billingReference",
+//   "order placer": "orderPlacer",
+//   "account name": "accountName",
+//   "client name": "clientName",
+//   "client id": "clientId",
+//   "courier": "courier",
+//   "courier number": "courierId",
+//   "origin name": "originName",
+//   "origin street": "originStreet",
+//   "origin postal code": "originPostalCode",
+//   "destination name": "destinationName",
+//   "destination street": "destinationStreet",
+//   "destination floor/suite/apt.": "destinationFloorStreetApt",
+//   "destination postal code": "destinationPostalCode",
+//   "destination zone": "destinationZone",
+//   "delivery status": "deliveryStatus",
+//   "creation time": "creationTime",
+//   "ready time": "readyTime",
+//   "due time": "dueTime",
+//   "service": "service",
+//   "rate": "rate",
+//   "payment method as string": "paymentMethod",
+//   "delivery fee": "deliveryFee",
+//   "extras": "extras",
+//   "delivery notes": "deliveryNotes",
+//   "pod": "pod",
+//   "special instructions": "specialInstructions",
+//   "exclude canceled": "excludeCanceled",
+// };
 
 export const invoiceItemsDefaults = {
     jobId: true,

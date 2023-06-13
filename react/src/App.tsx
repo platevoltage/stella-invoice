@@ -1,7 +1,7 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 import './App.css';
 import Papa from 'papaparse';
-import { Columns, Tag, invoiceItemsDefaults, Client } from './interfaces';
+import { Columns, Tag, invoiceItemsDefaults, Client, columnDef } from './interfaces';
 import Options from './components/Options';
 import ClientList from './components/ClientList';
 import Logo from './components/Logo';
@@ -15,7 +15,7 @@ function App() {
     delimiter: "",	// auto-detect
     quoteChar: '"',
     escapeChar: '',
-    header: false,
+    header: true,
     transformHeader: undefined,
     dynamicTyping: false,
     preview: 0,
@@ -27,40 +27,42 @@ function App() {
     transform: undefined,
     delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP],
     complete: (result: Papa.ParseResult<string>) => {
+
       const table: Tag[] = [];
       const _clientIds: number[] = [];
       const _clientMetaData: Client[] = [];
       console.log(result.data);
-      for (let tag of result.data) {
+      const key = columnDef;
+      for (let tag of result.data as any) {
         const x: Tag = {
-          jobId: +tag[0],//
-          billingReference: (tag[1] || "").trim(),//
-          orderPlacer: (tag[2] || "").trim(),//
-          // accountName: (tag[3] || "").trim(),
-          clientName: (tag[3] || "").trim(),//
-          clientId: +tag[4],//
-          courier: (tag[5] || "").trim(),//
-          courierId: +tag[6],//
-          originName: (tag[7] || "").trim(),//
-          originStreet: (tag[8] || "").trim(),//
-          originPostalCode: (tag[9] || "").trim(),//
-          destinationName: (tag[10] || "").trim(),//
-          destinationStreet: (tag[11] || "").trim(),//
-          destinationFloorStreetApt: (tag[12] || "").trim(),//
-          destinationPostalCode: (tag[13] || "").trim(),//
-          destinationZone: (tag[14] || "").trim(),//
-          deliveryStatus: (tag[15] || "").trim(),
-          creationTime: (tag[16] || "").trim(),
-          readyTime: (tag[17] || "").trim(),
-          dueTime: (tag[18] || "").trim(),
-          service: (tag[19] || "").trim(),
-          rate: (tag[20] || "").trim(),
-          paymentMethod: (tag[21] || "").trim(),
-          deliveryFee: (tag[22] || "").trim(),
-          extras: (tag[23] || "").trim(),
-          deliveryNotes: (tag[24] || "").trim(),
-          pod: (tag[25] || "").trim(),
-          specialInstructions: (tag[26] || "").trim(),
+          jobId: +tag[key.jobId],//
+          billingReference: (tag[key.billingReference] || "").trim(),//
+          orderPlacer: (tag[key.orderPlacer] || "").trim(),//
+          // accountName: (tag[key.accountName] || "").trim(),
+          clientName: (tag[key.clientName] || "").trim(),//
+          clientId: +tag[key.clientId],//
+          courier: (tag[key.courier] || "").trim(),//
+          courierId: +tag[key.courierId],//
+          originName: (tag[key.originName] || "").trim(),//
+          originStreet: (tag[key.originStreet] || "").trim(),//
+          originPostalCode: (tag[key.originPostalCode] || "").trim(),//
+          destinationName: (tag[key.destinationName] || "").trim(),//
+          destinationStreet: (tag[key.destinationStreet] || "").trim(),//
+          destinationFloorStreetApt: (tag[key.destinationFloorStreetApt] || "").trim(),//
+          destinationPostalCode: (tag[key.destinationPostalCode] || "").trim(),//
+          destinationZone: (tag[key.destinationZone] || "").trim(),//
+          deliveryStatus: (tag[key.deliveryStatus] || "").trim(),
+          creationTime: (tag[key.creationTime] || "").trim(),
+          readyTime: (tag[key.readyTime] || "").trim(),
+          dueTime: (tag[key.dueTime] || "").trim(),
+          service: (tag[key.service] || "").trim(),
+          rate: (tag[key.rate] || "").trim(),
+          paymentMethod: (tag[key.paymentMethod] || "").trim(),
+          deliveryFee: (tag[key.deliveryFee] || "").trim(),
+          extras: (tag[key.extras] || "").trim(),
+          deliveryNotes: (tag[key.deliveryNotes] || "").trim(),
+          pod: (tag[key.pod] || "").trim(),
+          specialInstructions: (tag[key.specialInstructions] || "").trim(),
           // excludeCanceled: tag[26].trim(),
         };
         table.push(x);
@@ -75,6 +77,8 @@ function App() {
       }
       setclientMetaData(_clientMetaData);
       setInputCSV(table);
+      console.log(result)
+      console.log(table)
     }
   }
 
