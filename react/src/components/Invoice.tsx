@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
         marginRight: 15,
         marginTop: 30,
         fontSize: 8,
+        height: 14,
         backgroundColor: '#dce9f2',
         color: '#5090bc', 
         position: "relative"
@@ -105,7 +106,8 @@ const styles = StyleSheet.create({
     descriptionColumn: {
         padding: 3,
         left: 220,
-        width: 200
+        width: 200,
+        minHeight: 40
     },
     qtyColumn: {
         padding: 3,
@@ -186,7 +188,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
     const data: Tag[] = invoiceData.data;
     const dataReduced: ReducedTag[] = []; 
     for (let tag of data) {
-        total += parseFloat(tag.deliveryFee);
+        total += parseFloat(tag.deliveryFee.replace(/\$/g, ""));
         let identicalTag = false;
         // for (let tagReduced of dataReduced) {
         //     if (tagReduced.destinationName === tag.destinationName &&
@@ -294,7 +296,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                             {dataReduced.map((line: any, index: number) =>
                             <View style={styles.tableRow} key={index} wrap={false}>
                                 <View style={styles.dateColumn}>
-                                    <Text>{(new Date(line.creationTime)).toLocaleDateString()}</Text>
+                                    <Text>{(new Date(line.creationTime.split(' ')[0])).toLocaleDateString()}</Text>
                                 </View>
                                 <View style={styles.typeColumn}>
                                     <Text>{line.jobId}</Text>
@@ -311,7 +313,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                     <Text>${ (line.deliveryFee * 1).toFixed(2) }</Text>
                                 </View> */}
                                 <View style={styles.amountColumn}>
-                                    <Text>${ (line.deliveryFee * line.qty).toFixed(2) }</Text>
+                                    <Text>${ ((line.deliveryFee).replace(/\$/g, "") * line.qty).toFixed(2) }</Text>
                                 </View>
                             </View>
                             )}
