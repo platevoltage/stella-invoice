@@ -1,0 +1,30 @@
+.popup {
+    width: 40em;
+    height: 20em;
+    margin-top: 60px;
+    background-color: #0b0d11cc;
+    backdrop-filter: blur(4px);
+    box-shadow: 4px 4px 10px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.button-group {
+    width: 60%;
+    margin-left: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    width: 60%;
+    margin-left: 20%;
+}
+
+.popup label {
+    margin-left: 20%;
+}
+.popup .button {
+    margin-top: 2em;
+    padding: .4em 2em;
+}

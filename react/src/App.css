@@ -47,7 +47,7 @@ input[type="file"] {
   text-align: center;
 }
 
-.file-upload, .button, .options, .client-list {
+.file-upload, .button, .options, .client-list, .popup, .input {
   transition-property: background-color, color, border-color;
   transition-duration: .2s;
   color: inherit;
