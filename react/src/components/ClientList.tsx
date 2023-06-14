@@ -129,7 +129,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
         </div>
         )}
 
-        { showInvoice && <Invoice invoiceData={invoiceData} /> }
+        { showInvoice && <Invoice invoiceData={invoiceData} setShowInvoice={setShowInvoice}/> }
     </div>
   )
 }

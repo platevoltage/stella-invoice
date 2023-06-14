@@ -3,6 +3,7 @@ import { Tag } from "../interfaces";
 
 interface Props {
     invoiceData: any;
+    setShowInvoice: (x: boolean) => void;
 }
 
 interface ReducedTag extends Tag {
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
 });
   
   // Create Document Component
-function Invoice({invoiceData}: Props) {
+function Invoice({invoiceData, setShowInvoice}: Props) {
     let total: number = 0;
     const date = new Date();
     const dueDate = new Date();
@@ -196,6 +197,11 @@ function Invoice({invoiceData}: Props) {
     
     return (
         <div style={{position: "fixed", left: 0, top: "30px"}}>
+            <button onClick={() => setShowInvoice(false)} style={{position: "fixed", top: "80px", height: "40px", backgroundColor: "#323639", border: "none", borderRadius: "0 0 1em 0"}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                </svg>
+            </button>
             <PDFViewer style={styles.viewer}>
                 {/* Start of the document*/}
                 <Document>
