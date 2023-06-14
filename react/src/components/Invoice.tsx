@@ -297,7 +297,8 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                             <Text>We appreciate your business ! Please contact</Text>
                             <Text>us at office@stellacourier for any question or</Text>
                             <Text>to place future orders. If you wish to open an</Text>
-                            <Text>account with Stella Courier please email info@stellacourier.com</Text>
+                            <Text>account with Stella Courier please email</Text>
+                            <Text>info@stellacourier.com</Text>
                         </View>
                         <View style={styles.totalRight}>
                             <Text>BALANCE DUE</Text>
