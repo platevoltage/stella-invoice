@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, PDFViewer, Image, Font } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from "@react-pdf/renderer";
 import { Tag } from "../interfaces";
 
 interface Props {
@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
       fontFamily: 'Helvetica',
       backgroundColor: "#ffffff",
       color: "black",
+      paddingBottom: 30,
+      paddingTop: 30
     },
     bold: {
       fontFamily: 'Helvetica-Bold',
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     headerLeft: {
-        margin: 30,
+        marginLeft: 30,
         padding: 10,
         fontSize: 10,
     },
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
     INVOICE: {
         marginLeft: 30,
         padding: 10,
-        fontSize: 18,
+        fontSize: 24,
         color: "#5090bc"
     },
     billToLeft: {
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         fontSize: 10, 
-        position: "relative"
+        position: "relative",
     },
     dateColumn: {
         padding: 3,
@@ -94,24 +96,24 @@ const styles = StyleSheet.create({
     typeColumn: {
         padding: 3,
         position: "absolute",
-        left: 70,
+        left: 90,
         width: 100
     },
     descriptionColumn: {
         padding: 3,
-        left: 180,
-        width: 160
+        left: 220,
+        width: 200
     },
     qtyColumn: {
         padding: 3,
         position: "absolute",
-        right: 180,
+        right: 170,
         textAlign: "right",
     },
     rateColumn: {
         padding: 3,
         position: "absolute",
-        right: 110,
+        right: 100,
         textAlign: "right",
     },
     amountColumn: {
@@ -155,6 +157,13 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: "60px"
+    },
+    footer: {
+        position: "absolute",
+        bottom: 24,
+        fontSize: 10,
+        textAlign: "center",
+        width: "100%"
     }
 });
   
@@ -170,18 +179,18 @@ function Invoice({invoiceData}: Props) {
     for (let tag of data) {
         total += parseFloat(tag.deliveryFee);
         let identicalTag = false;
-        for (let tagReduced of dataReduced) {
-            if (tagReduced.destinationName === tag.destinationName &&
-                tagReduced.destinationStreet === tag.destinationStreet &&
-                tagReduced.originStreet === tag.originStreet &&
-                tagReduced.deliveryFee === tag.deliveryFee &&
-                tagReduced.creationTime === tag.creationTime
-            ) {
-                tagReduced.qty++;
-                identicalTag = true;
-                break;
-            }
-        }
+        // for (let tagReduced of dataReduced) {
+        //     if (tagReduced.destinationName === tag.destinationName &&
+        //         tagReduced.destinationStreet === tag.destinationStreet &&
+        //         tagReduced.originStreet === tag.originStreet &&
+        //         tagReduced.deliveryFee === tag.deliveryFee &&
+        //         tagReduced.creationTime === tag.creationTime
+        //     ) {
+        //         tagReduced.qty++;
+        //         identicalTag = true;
+        //         break;
+        //     }
+        // }
         if (!identicalTag) dataReduced.push({...tag, qty: 1, type: "SF Messenger\n Service"});
     }
     
@@ -191,7 +200,8 @@ function Invoice({invoiceData}: Props) {
                 {/* Start of the document*/}
                 <Document>
                 {/*render a single page*/}
-                <Page size="A4" style={styles.page}>
+                <Page size="LETTER" style={styles.page}>
+
                     <View style={styles.headerLeft}>
                         <Text>Stella Courier LLC</Text>
                         <Text>PO Box 10141</Text>
@@ -235,37 +245,41 @@ function Invoice({invoiceData}: Props) {
                                 <Text>DATE</Text>
                             </View>
                         </View>
+                        <View style={styles.typeColumn}>
+                            <Text>ID / REFERENCE</Text>
+                        </View>
                         <View style={styles.descriptionColumn}>
                             <Text>DESCRIPTION</Text>
                         </View>
-                        <View style={styles.qtyColumn}>
+                        {/* <View style={styles.qtyColumn}>
                             <Text>QTY</Text>
-                        </View>
-                        <View style={styles.rateColumn}>
+                        </View> */}
+                        {/* <View style={styles.rateColumn}>
                             <Text>RATE</Text>
-                        </View>
+                        </View> */}
                         <View style={styles.amountColumn}>
                             <Text>AMOUNT</Text>
                         </View>
                     </View>
                     {dataReduced.map((line: any, index: number) =>
-                    <View style={styles.tableRow}>
+                    <View style={styles.tableRow} key={index} wrap={false}>
                         <View style={styles.dateColumn}>
                             <Text>{(new Date(line.creationTime)).toLocaleDateString()}</Text>
                         </View>
                         <View style={styles.typeColumn}>
-                            <Text>{line.type}</Text>
+                            <Text>{line.jobId}</Text>
+                            <Text>{line.billingReference}</Text>
                         </View>
                         <View style={styles.descriptionColumn}>
                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}</Text>
                             <Text>{line.extras}</Text>
                         </View>
-                        <View style={styles.qtyColumn}>
+                        {/* <View style={styles.qtyColumn}>
                             <Text>{line.qty}</Text>
-                        </View>
-                        <View style={styles.rateColumn}>
+                        </View> */}
+                        {/* <View style={styles.rateColumn}>
                             <Text>${ (line.deliveryFee * 1).toFixed(2) }</Text>
-                        </View>
+                        </View> */}
                         <View style={styles.amountColumn}>
                             <Text>${ (line.deliveryFee * line.qty).toFixed(2) }</Text>
                         </View>
@@ -286,32 +300,11 @@ function Invoice({invoiceData}: Props) {
                             </View>
                         </View>
                     </View>
-                    {/* <View style={styles.smallText}>
-                        {invoiceData.data.map((line: any, index: number) =>
-                            <div key={index}>
-                                <Text>
-                                    {line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}
-                                </Text>
-                                <Text>
-                                    {line.extras}
-                                </Text>
-                                <Text>
-                                    ${line.deliveryFee}
-                                </Text>
-                                <Text>{"\n\n"}</Text>
-                            </div> 
-                        )} */}
-                        {/* <Text>
-                            {invoiceData.data[0].destinationName}
-                        </Text> */}
-                        {/* <Text>__________________________________________________________</Text>
+
+                    <View style={styles.footer}>
+                        <Text>an 18% late fee will applied to all past due invoices.</Text>
                     </View>
-                    <View style={styles.smallText}>
-                        <Text>BALANCE DUE</Text>
-                    </View>
-                    <View style={styles.totalText}>
-                        <Text>${total.toFixed(2)}</Text>
-                    </View> */}
+     
                 </Page>
                 </Document>
             </PDFViewer>

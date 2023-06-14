@@ -5,7 +5,7 @@ const isMac = process.platform === 'darwin';
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 780,
+    width: 820,
     height: isMac ? 580 : 610,
     title: "Stella Invoice",
     // fullscreen: true,
