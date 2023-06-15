@@ -8,6 +8,9 @@
 }
 
 .options input {
-    margin: .5em;
+    margin-bottom: .7em;
 }
 
+.options label {
+    margin-left: .6em;
+}

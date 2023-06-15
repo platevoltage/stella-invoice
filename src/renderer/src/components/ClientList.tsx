@@ -27,7 +27,7 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
   const [invoiceData, setInvoiceData] = useState({name: "Test Name", data: [{}]});
 
   function processInvoices() {
-    const csvArray = [];
+    const csvArray: string[] = [];
     for (let client of clientMetaData) {
       //filter by clientID
       const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === client.id);

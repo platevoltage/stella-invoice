@@ -88,7 +88,7 @@ function App() {
         console.log(fileList[0]);
         const reader = new FileReader();
         reader.readAsText(fileList[0]);
-        reader.onload = async function(e) {
+        reader.onload = async function() {
             const csv = reader.result as string;
             Papa.parse(csv, parseConfig);
         };

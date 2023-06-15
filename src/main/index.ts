@@ -1,14 +1,14 @@
 import { app, BrowserWindow, Menu } from "electron";
 import { join } from "path";
-import { electronApp, optimizer, is } from "@electron-toolkit/utils";
+import { is } from "@electron-toolkit/utils";
 // import icon from '../../resources/icon.png?asset';
 
 const isMac = process.platform === "darwin";
 
 const createWindow = (): BrowserWindow => {
     const win = new BrowserWindow({
-        width: 880,
-        height: isMac ? 600 : 610,
+        width: 834,
+        height: isMac ? 590 : 610,
         title: "Stella Invoice",
         // fullscreen: true,
         // kiosk: true,
