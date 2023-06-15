@@ -1,16 +1,4 @@
-{ 
-  "compilerOptions": {
-    "target": "es5",
-    "outDir": "dist",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false,
-    // "suppressImplicitAnyIndexErrors": true ,
-    "allowJs": true
-  },
-  "include" : ["src"],
+{
+  "files": [],
+  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }]
 }
