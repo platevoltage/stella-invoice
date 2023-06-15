@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-width: 17em;
+  min-width: 19em;
   overflow-y: hidden;
 }
 
@@ -47,7 +47,7 @@ input[type="file"] {
   text-align: center;
 }
 
-.file-upload, .button, .options, .client-list {
+.file-upload, .button, .options, .client-list, .popup, .input {
   transition-property: background-color, color, border-color;
   transition-duration: .2s;
   color: inherit;
@@ -55,7 +55,6 @@ input[type="file"] {
   border: 2px solid #30363d;
   background-color: #161b22;
   border-radius: 6px; 
-
   padding: .5em 1em;
   margin: .2em;
   cursor: pointer;

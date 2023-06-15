@@ -5,7 +5,7 @@ const isMac = process.platform === 'darwin';
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 780,
+    width: 820,
     height: isMac ? 580 : 610,
     title: "Stella Invoice",
     // fullscreen: true,
@@ -28,7 +28,8 @@ const createWindow = () => {
     }
   });
 
-  win.loadFile(path.join(__dirname, './build/index.html')) 
+  win.loadFile(path.join(__dirname, './build/index.html'));
+  // win.loadURL('http://localhost:3000/');
 
   win.on('page-title-updated', function(e) {
     e.preventDefault()
