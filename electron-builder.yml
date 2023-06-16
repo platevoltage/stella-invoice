@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: electron-app-react
+productName: Stella Invoice
 directories:
   buildResources: build
 files:
