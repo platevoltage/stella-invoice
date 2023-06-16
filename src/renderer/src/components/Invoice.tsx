@@ -2,6 +2,7 @@ import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from "@react
 import { Tag } from "../interfaces";
 import { useState } from "react";
 import "./Invoice.css";
+import imgUrl from '../assets/logo.png';
 
 interface Props {
     invoiceData: any;
@@ -244,7 +245,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                     <Text>www.stellacourier.com</Text>
                                 </View>
                                 <View style={styles.headerRight}>
-                                    <Image src="./logo.png" style={styles.logo}/>
+                                    <Image src={imgUrl} style={styles.logo}/>
                                 </View>
                                 <View style={styles.INVOICE}>
                                     <Text>INVOICE</Text>
