@@ -226,7 +226,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                     <input className="input" type="number" id="terms" name="terms" value={terms} onChange={(e) => setTerms(+e.target.value)}></input>
                     <br></br>
                     <label htmlFor="memo">Memo:</label>
-                    <textarea className="input" id="memo" name="memo" value={memo} onChange={(e) => setMemo(e.target.value)}></textarea>
+                    <textarea rows={4} className="input" id="memo" name="memo" value={memo} onChange={(e) => setMemo(e.target.value)}></textarea>
                     <div className="button-group">           
                         <button className="button" onClick={() => setShowInvoice(false)}>Cancel</button>
                         <button className="button" onClick={handleGo}>Go!</button>
