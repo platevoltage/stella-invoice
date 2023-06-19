@@ -1,6 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, PDFViewer, Image } from "@react-pdf/renderer";
 import { Tag } from "../interfaces";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Invoice.css";
 import imgUrl from '../assets/logo.png';
 
@@ -186,6 +186,16 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
     const [terms, setTerms] = useState(15);
     const [memo, setMemo] = useState("");
     const [formFilled, setFormFilled] = useState(false);
+
+    useEffect(() => {
+        const savedData = localStorage.getItem(invoiceData.name);
+        if (savedData) {
+            const savedDataParsed = JSON.parse(savedData);
+            setTerms(savedDataParsed.terms);
+            setMemo(savedDataParsed.memo);
+        }
+    },[]);
+
     function handleGo() {
         setFormFilled(true);
         const storageObject = {
