@@ -52,7 +52,7 @@ app.whenReady().then(async () => {
             submenu: [{ label: "Quit", role: "quit" }]
         }
     ]);
-    Menu.setApplicationMenu(isMac ? menu : null);
+    if (!(is.dev && process.env["ELECTRON_RENDERER_URL"])) Menu.setApplicationMenu(isMac ? menu : null);
 });
 
 app.on("window-all-closed", () => {

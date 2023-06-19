@@ -188,6 +188,11 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
     const [formFilled, setFormFilled] = useState(false);
     function handleGo() {
         setFormFilled(true);
+        const storageObject = {
+            memo,
+            terms
+        }
+        localStorage.setItem(invoiceData.name, JSON.stringify(storageObject));
     }
     let total = 0;
     const date = new Date();
