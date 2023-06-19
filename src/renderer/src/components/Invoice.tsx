@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
 function Invoice({invoiceData, setShowInvoice}: Props) {
     const [invoiceNum, setInvoiceNum] = useState(1000);
     const [terms, setTerms] = useState(15);
+    const [memo, setMemo] = useState("");
     const [formFilled, setFormFilled] = useState(false);
     function handleGo() {
         setFormFilled(true);
@@ -214,11 +215,13 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                 <div className="popup">
                     <label htmlFor="invoice-num">Invoice #:</label>
                     <input className="input" type="number" id="invoice-num" name="invoice-num" value={invoiceNum} onChange={(e) => setInvoiceNum(+e.target.value)}>
-
                     </input>
                     <br></br>
                     <label htmlFor="terms">Terms:</label>
                     <input className="input" type="number" id="terms" name="terms" value={terms} onChange={(e) => setTerms(+e.target.value)}></input>
+                    <br></br>
+                    <label htmlFor="memo">Memo:</label>
+                    <textarea className="input" id="memo" name="memo" value={memo} onChange={(e) => setMemo(e.target.value)}></textarea>
                     <div className="button-group">           
                         <button className="button" onClick={() => setShowInvoice(false)}>Cancel</button>
                         <button className="button" onClick={handleGo}>Go!</button>
