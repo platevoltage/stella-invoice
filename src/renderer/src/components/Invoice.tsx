@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
         borderTopWidth: 1, 
         borderColor: "#5090bc", 
     },
+    memo: {
+        fontSize: 10,
+        marginTop: 10,
+        marginLeft: 40
+    },
     dottedLine: {
         marginLeft: 30,
         marginRight: 30,
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     tableHeader: {
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 30,
+        marginTop: 10,
         fontSize: 8,
         height: 14,
         backgroundColor: "#dce9f2",
@@ -277,6 +282,9 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                 
                                 </View>
                                 <View style={styles.line} />
+                                <View style={styles.memo}>
+                                    <Text>{memo}</Text>
+                                </View>
                                 <View style={styles.tableHeader}>
                                     <View style={styles.dateColumn}>
                                         <View style={{position: "relative"}}>
