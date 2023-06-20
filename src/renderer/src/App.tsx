@@ -8,7 +8,7 @@ import Logo from './components/Logo';
 
 function App() {
   const [inputCSV, setInputCSV] = useState<Tag[]>([]);
-  const [clientMetaData, setclientMetaData] = useState<Client[]>([]);
+  const [clientMetaData, setClientMetaData] = useState<Client[]>([]);
   const [invoiceItems, setInvoiceItems] = useState<Columns>(invoiceItemsDefaults);
 
   const parseConfig: Papa.ParseConfig = {
@@ -75,7 +75,19 @@ function App() {
           _clientMetaData.push(temp);
         }
       }
-      setclientMetaData(_clientMetaData);
+      _clientMetaData.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+      
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      setClientMetaData(_clientMetaData);
       setInputCSV(table);
       console.log(result)
       console.log(table)
