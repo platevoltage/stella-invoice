@@ -14,10 +14,6 @@ interface ReducedTag extends Tag {
     qty: number;
 }
 
-const dateOptions = {
-    timeZone: 'UTC', // Specify the desired time zone here
-    timeZoneName: 'short', // Include the time zone abbreviation
-  };
 
 const styles = StyleSheet.create({
     page: {
