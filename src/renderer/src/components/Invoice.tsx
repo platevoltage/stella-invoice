@@ -102,17 +102,23 @@ const styles = StyleSheet.create({
     dateColumn: {
         padding: 3,
         position: "absolute",
-        left: 14
+        left: 10
     },
-    typeColumn: {
+    idRefColumn: {
         padding: 3,
         position: "absolute",
-        left: 90,
+        left: 80,
+        width: 90
+    },
+    serviceColumn: {
+        padding: 3,
+        position: "absolute",
+        left: 180,
         width: 100
     },
     descriptionColumn: {
         padding: 3,
-        left: 220,
+        left: 290,
         width: 200,
         minHeight: 40
     },
@@ -337,8 +343,11 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                             <Text>DATE</Text>
                                         </View>
                                     </View>
-                                    <View style={styles.typeColumn}>
+                                    <View style={styles.idRefColumn}>
                                         <Text>ID / REFERENCE</Text>
+                                    </View>
+                                    <View style={styles.serviceColumn}>
+                                        <Text>SERVICE</Text>
                                     </View>
                                     <View style={styles.descriptionColumn}>
                                         <Text>DESCRIPTION</Text>
@@ -352,13 +361,21 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                         <View style={styles.dateColumn}>
                                             <Text>{(new Date(line.creationTime.split(" ")[0])).toLocaleDateString()}</Text>
                                         </View>
-                                        <View style={styles.typeColumn}>
+                                        <View style={styles.idRefColumn}>
                                             <Text>{line.jobId}</Text>
                                             <Text>{line.billingReference}</Text>
                                         </View>
+
+                                        <View style={styles.serviceColumn}>
+                                            <Text>{line.service}</Text>
+                                        </View>
+
                                         <View style={styles.descriptionColumn}>
                                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} {line.destinationPostalCode}</Text>
                                             <Text>{line.extras}</Text>
+                                            <Text>{line.notes}</Text>
+                                            <Text>{line.pod}</Text>
+                                            <Text> </Text>
                                         </View>
                     
                                         <View style={styles.amountColumn}>
