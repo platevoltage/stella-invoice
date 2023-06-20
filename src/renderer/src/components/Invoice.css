@@ -1,7 +1,8 @@
 .popup {
     width: 40em;
-    height: 30em;
-    margin-top: 60px;
+    /* height: 50em; */
+    /* margin-top: 0px; */
+    padding-top: 30px;
     background-color: #0b0d11cc;
     backdrop-filter: blur(4px);
     box-shadow: 4px 4px 10px black;

@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         fontSize: 10,
+        minHeight: 50
     },
     billToRight: {
         marginTop: 10,
@@ -180,11 +181,20 @@ const styles = StyleSheet.create({
     }
 });
   
+const defaultPaymentAddress = 
+`Stella Courier LLC
+PO Box 10141
+Berkeley, CA 94709 US
+admin@stellacourier.com
+www.stellacourier.com`;
+
 // Create Document Component
 function Invoice({invoiceData, setShowInvoice}: Props) {
     const [invoiceNum, setInvoiceNum] = useState(0);
     const [terms, setTerms] = useState(15);
     const [memo, setMemo] = useState("");
+    const [clientAddress, setClientAddress] = useState(invoiceData.name);
+    const [paymentAddress, setPaymentAddress] = useState(defaultPaymentAddress);
     const [formFilled, setFormFilled] = useState(false);
 
     useEffect(() => {
@@ -197,6 +207,18 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
             const savedDataParsed = JSON.parse(savedData);
             setTerms(savedDataParsed.terms);
             setMemo(savedDataParsed.memo);
+            setClientAddress(savedDataParsed.clientAddress);
+            setPaymentAddress(savedDataParsed.paymentAddress);
+            if (savedDataParsed.clientAddress || "".trim().length === 0) {
+                setClientAddress(invoiceData.name);
+            } else {
+                setClientAddress(savedDataParsed.clientAddress);
+            }
+            if (savedDataParsed.paymentAddress || "".trim().length === 0) {
+                setPaymentAddress(defaultPaymentAddress);
+            } else {
+                setPaymentAddress(savedDataParsed.paymentAddress);
+            }
         }
     },[]);
 
@@ -204,7 +226,9 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
         setFormFilled(true);
         const storageObject = {
             memo,
-            terms
+            terms,
+            clientAddress,
+            paymentAddress
         }
         localStorage.setItem(invoiceData.name, JSON.stringify(storageObject));
         localStorage.setItem("INVOICE_NUM", (invoiceNum+1).toString());
@@ -247,6 +271,12 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                     <br></br>
                     <label htmlFor="memo">Memo:</label>
                     <textarea rows={4} className="input" id="memo" name="memo" value={memo} onChange={(e) => setMemo(e.target.value)}></textarea>
+                    <br></br>
+                    <label htmlFor="client-address">Client Address:</label>
+                    <textarea rows={5} className="input" id="client-address" name="client-address" value={clientAddress} onChange={(e) => setClientAddress(e.target.value)}></textarea>
+                    <br></br>
+                    <label htmlFor="payment-address">Payment Address:</label>
+                    <textarea rows={5} className="input" id="payment-address" name="payment-address" value={paymentAddress} onChange={(e) => setPaymentAddress(e.target.value)}></textarea>
                     <div className="button-group">           
                         <button className="button" onClick={() => setShowInvoice(false)}>Cancel</button>
                         <button className="button" onClick={handleGo}>Go!</button>
@@ -266,11 +296,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                             <Page size="LETTER" style={styles.page}>
 
                                 <View style={styles.headerLeft}>
-                                    <Text>Stella Courier LLC</Text>
-                                    <Text>PO Box 10141</Text>
-                                    <Text>Berkeley, CA 94709 US</Text> 
-                                    <Text>admin@stellacourier.com</Text> 
-                                    <Text>www.stellacourier.com</Text>
+                                    <Text>{paymentAddress}</Text>
                                 </View>
                                 <View style={styles.headerRight}>
                                     <Image src={imgUrl} style={styles.logo}/>
@@ -281,9 +307,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                 <View>
                                     <View style={styles.billToLeft}>
                                         <Text style={styles.bold}>BILL TO</Text>
-                                        <Text>{invoiceData.name}</Text>
-                                        <Text> </Text>
-                                        <Text> </Text>
+                                        <Text>{clientAddress}</Text>
                                     </View>
                                     <View style={styles.billToRight}>
                                         <View style={{position: "absolute", width: 80, right: 4, textAlign: "right", ...styles.bold}}>
