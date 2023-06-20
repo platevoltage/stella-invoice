@@ -206,15 +206,15 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
         if (savedData) {
             const savedDataParsed = JSON.parse(savedData);
             setTerms(savedDataParsed.terms);
-            setMemo(savedDataParsed.memo);
-            setClientAddress(savedDataParsed.clientAddress);
-            setPaymentAddress(savedDataParsed.paymentAddress);
-            if (savedDataParsed.clientAddress || "".trim().length === 0) {
+            setMemo(savedDataParsed.memo.trim());
+            setClientAddress(savedDataParsed.clientAddress.trim());
+            setPaymentAddress(savedDataParsed.paymentAddress.trim());
+            if ((savedDataParsed.clientAddress || "").trim().length === 0) {
                 setClientAddress(invoiceData.name);
             } else {
                 setClientAddress(savedDataParsed.clientAddress);
             }
-            if (savedDataParsed.paymentAddress || "".trim().length === 0) {
+            if ((savedDataParsed.paymentAddress || "").trim().length === 0) {
                 setPaymentAddress(defaultPaymentAddress);
             } else {
                 setPaymentAddress(savedDataParsed.paymentAddress);
@@ -284,11 +284,13 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                 </div>
                 :
                 <>
-                    <button onClick={() => setShowInvoice(false)} style={{position: "fixed", left: 0, top: "87px", height: "34px", backgroundColor: "#323639", color: "#ffffff", border: "none", borderRadius: "0 0 1em 0", boxShadow: "-0px -5px 0px #323639, 0px 0px 4px black"}}>
+            
+                    <button onClick={() => setShowInvoice(false)} className="back-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-left-fill" viewBox="0 0 16 16">
                             <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
                         </svg>
                     </button>
+
                     <PDFViewer style={styles.viewer} showToolbar={true}>
             
                         <Document>

@@ -17,6 +17,23 @@
     justify-content: center;
 }
 
+.back-button {
+    position: fixed;
+    left: 0;
+    top: 87px;
+    height: 34px;
+    width: 50px;
+    background-color: #323639;
+    color: #ffffff;
+    border: none;
+    border-radius: 0 0 1em 0;
+    box-shadow: -0px -5px 0px #323639, 0px 0px 4px black;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background-color: #666666;
+}
 .input {
     width: 60%;
     margin-left: 20%;
