@@ -182,13 +182,17 @@ const styles = StyleSheet.create({
   
 // Create Document Component
 function Invoice({invoiceData, setShowInvoice}: Props) {
-    const [invoiceNum, setInvoiceNum] = useState(1000);
+    const [invoiceNum, setInvoiceNum] = useState(0);
     const [terms, setTerms] = useState(15);
     const [memo, setMemo] = useState("");
     const [formFilled, setFormFilled] = useState(false);
 
     useEffect(() => {
         const savedData = localStorage.getItem(invoiceData.name);
+        const savedInvoiceNum = localStorage.getItem("INVOICE_NUM");
+        if (savedInvoiceNum) {
+            setInvoiceNum(+savedInvoiceNum);
+        }
         if (savedData) {
             const savedDataParsed = JSON.parse(savedData);
             setTerms(savedDataParsed.terms);
@@ -203,6 +207,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
             terms
         }
         localStorage.setItem(invoiceData.name, JSON.stringify(storageObject));
+        localStorage.setItem("INVOICE_NUM", (invoiceNum+1).toString());
     }
     let total = 0;
     const date = new Date();
