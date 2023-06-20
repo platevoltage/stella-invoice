@@ -14,6 +14,11 @@ interface ReducedTag extends Tag {
     qty: number;
 }
 
+const dateOptions = {
+    timeZone: 'UTC', // Specify the desired time zone here
+    timeZoneName: 'short', // Include the time zone abbreviation
+  };
+
 const styles = StyleSheet.create({
     page: {
         fontFamily: "Helvetica",
@@ -359,7 +364,8 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                 {dataReduced.map((line: any, index: number) =>
                                     <View style={styles.tableRow} key={index} wrap={false}>
                                         <View style={styles.dateColumn}>
-                                            <Text>{(new Date(line.creationTime.split(" ")[0])).toLocaleDateString()}</Text>
+                                            <Text>{(new Date(line.creationTime.split(" ")[0])).toLocaleString('en-US', { timeZone: "UTC" }).split(",")[0]}
+                                            </Text>
                                         </View>
                                         <View style={styles.idRefColumn}>
                                             <Text>{line.jobId}</Text>
