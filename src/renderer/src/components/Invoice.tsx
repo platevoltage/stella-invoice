@@ -360,7 +360,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                 {dataReduced.map((line: any, index: number) =>
                                     <View style={styles.tableRow} key={index} wrap={false}>
                                         <View style={styles.dateColumn}>
-                                            <Text>{(new Date(line.creationTime.split(" ")[0])).toLocaleString('en-US', { timeZone: "UTC" }).split(",")[0]}
+                                            <Text>{(new Date(line.readyTime.split(" ")[0])).toLocaleString('en-US', { timeZone: "UTC" }).split(",")[0]}
                                             </Text>
                                         </View>
                                         <View style={styles.idRefColumn}>
