@@ -59,10 +59,17 @@ export default function ClientList({clientMetaData, inputCSV, invoiceItems}: Pro
     setShowInvoice(true);
     const filtered: Tag[] = inputCSV.filter((x: Tag) => x.clientId === clientMetaData[index].id);
     
+    filtered.sort((a, b) => {
+      const timeA = new Date(a.readyTime);
+      const timeB = new Date(b.readyTime);
+      return timeA < timeB ? -1 : 1;
+    });
+    
     const invoiceData = {
       name: clientMetaData[index].name,
       data: filtered
     }
+    
     console.log(JSON.stringify(invoiceData, null, 2));
     setInvoiceData(invoiceData);
   }
