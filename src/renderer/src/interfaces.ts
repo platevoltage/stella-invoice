@@ -13,6 +13,7 @@ export interface Tag {
   destinationName: string;
   destinationStreet: string;
   destinationFloorStreetApt: string;
+  destinationCity: string;
   destinationPostalCode: string;
   destinationZone: string;
   deliveryStatus: string;
@@ -46,6 +47,7 @@ export interface Columns {
   destinationName: boolean;
   destinationStreet: boolean;
   destinationFloorStreetApt: boolean;
+  destinationCity: boolean;
   destinationPostalCode: boolean;
   destinationZone: boolean;
   deliveryStatus: boolean;
@@ -83,6 +85,7 @@ export const columnDef = {
     destinationName: "destination name",
     destinationStreet: "destination street",
     destinationFloorStreetApt: "destination floor/suite/apt.",
+    destinationCity: "destination city",
     destinationPostalCode: "destination postal code",
     destinationZone: "destination zone",
     deliveryStatus: "delivery status",
@@ -148,6 +151,7 @@ export const invoiceItemsDefaults = {
     destinationStreet: true,
     destinationFloorStreetApt: true,
     destinationPostalCode: true,
+    destinationCity: true,
     destinationZone: true,
     deliveryStatus: true,
     creationTime: true,

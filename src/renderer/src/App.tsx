@@ -49,6 +49,7 @@ function App() {
           destinationName: (tag[key.destinationName] || "").trim(),//
           destinationStreet: (tag[key.destinationStreet] || "").trim(),//
           destinationFloorStreetApt: (tag[key.destinationFloorStreetApt] || "").trim(),//
+          destinationCity: (tag[key.destinationCity] || "").trim(),//
           destinationPostalCode: (tag[key.destinationPostalCode] || "").trim(),//
           destinationZone: (tag[key.destinationZone] || "").trim(),//
           deliveryStatus: (tag[key.deliveryStatus] || "").trim(),
