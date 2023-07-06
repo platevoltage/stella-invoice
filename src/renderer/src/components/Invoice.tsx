@@ -376,7 +376,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} </Text>
                                             <Text>{line.destinationCity} {line.destinationPostalCode}</Text>
                                             <Text>{line.extras}</Text>
-                                            <Text>{line.notes}</Text>
+                                            <Text>{line.deliveryNotes}</Text>
                                             <Text>{line.pod}</Text>
                                             <Text> </Text>
                                         </View>
