@@ -324,12 +324,14 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                             <Text>DATE</Text>
                                             <Text>DUE DATE</Text>
                                             <Text>TERMS</Text>
+                                            <Text>TOTAL</Text>
                                         </View>
                                         <View style={{position: "absolute",width: 80, left: 0}}>
                                             <Text>{invoiceNum}</Text>
                                             <Text>{date.toLocaleDateString()}</Text>
                                             <Text>{dueDate.toLocaleDateString()}</Text>
                                             <Text>NET {terms}</Text>
+                                            <Text>${total.toFixed(2)}</Text>
                                         </View>
                                     </View>
                                 
@@ -375,6 +377,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                         <View style={styles.descriptionColumn}>
                                             <Text>{line.destinationName} {line.destinationStreet} {line.destinationFloorStreetApt} </Text>
                                             <Text>{line.destinationCity} {line.destinationPostalCode}</Text>
+                                            <Text>{line.destinationZone}</Text>
                                             <Text>{line.extras}</Text>
                                             <Text>{line.deliveryNotes}</Text>
                                             <Text>{line.pod}</Text>
