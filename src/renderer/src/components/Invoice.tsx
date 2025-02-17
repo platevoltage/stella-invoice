@@ -108,10 +108,16 @@ const styles = StyleSheet.create({
     idRefColumn: {
         padding: 3,
         position: "absolute",
-        left: 80,
+        left: 90,
         width: 90
     },
     serviceColumn: {
+        padding: 3,
+        position: "absolute",
+        left: 180,
+        width: 100
+    },
+    originColumn: {
         padding: 3,
         position: "absolute",
         left: 180,
@@ -189,9 +195,9 @@ const styles = StyleSheet.create({
 });
   
 const defaultPaymentAddress = 
-`Stella Courier LLC
-PO Box 10141
-Berkeley, CA 94709 US
+`Stella Courier
+PO Box 641411
+San Francisco, CA 94164 US
 admin@stellacourier.com
 www.stellacourier.com`;
 
@@ -349,11 +355,14 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                     <View style={styles.idRefColumn}>
                                         <Text>ID / REFERENCE</Text>
                                     </View>
-                                    <View style={styles.serviceColumn}>
+                                    {/* <View style={styles.serviceColumn}>
                                         <Text>SERVICE</Text>
+                                    </View> */}
+                                    <View style={styles.originColumn}>
+                                        <Text>ORIGIN</Text>
                                     </View>
                                     <View style={styles.descriptionColumn}>
-                                        <Text>DESCRIPTION</Text>
+                                        <Text>DESTINATION</Text>
                                     </View>
                                     <View style={styles.amountColumn}>
                                         <Text>AMOUNT</Text>
@@ -364,14 +373,20 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
                                         <View style={styles.dateColumn}>
                                             <Text>{(new Date(line.readyTime.split(" ")[0])).toLocaleString('en-US', { timeZone: "UTC" }).split(",")[0]}
                                             </Text>
+                                            <Text>{line.service}</Text>
                                         </View>
                                         <View style={styles.idRefColumn}>
                                             <Text>{line.jobId}</Text>
                                             <Text>{line.billingReference}</Text>
                                         </View>
 
-                                        <View style={styles.serviceColumn}>
+                                        {/* <View style={styles.serviceColumn}>
                                             <Text>{line.service}</Text>
+                                        </View> */}
+                                        <View style={styles.originColumn}>
+                                            <Text>{line.originName} {line.originStreet} {line.originFloorStreetApt} </Text>
+                                            <Text>{line.originCity} {line.originPostalCode}</Text>
+                                            <Text>{line.originZone}</Text>
                                         </View>
 
                                         <View style={styles.descriptionColumn}>
