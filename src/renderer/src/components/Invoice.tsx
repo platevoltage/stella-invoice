@@ -213,6 +213,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
     useEffect(() => {
         const savedData = localStorage.getItem(invoiceData.name);
         const savedInvoiceNum = localStorage.getItem("INVOICE_NUM");
+        const paymentAddress = localStorage.getItem("payment-address");
         if (savedInvoiceNum) {
             setInvoiceNum(+savedInvoiceNum);
         }
@@ -227,10 +228,10 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
             } else {
                 setClientAddress(savedDataParsed.clientAddress);
             }
-            if ((savedDataParsed.paymentAddress || "").trim().length === 0) {
+            if (!paymentAddress) {
                 setPaymentAddress(defaultPaymentAddress);
             } else {
-                setPaymentAddress(savedDataParsed.paymentAddress);
+                setPaymentAddress(paymentAddress);
             }
         }
     },[]);
@@ -244,6 +245,7 @@ function Invoice({invoiceData, setShowInvoice}: Props) {
             paymentAddress
         }
         localStorage.setItem(invoiceData.name, JSON.stringify(storageObject));
+        localStorage.setItem("payment-address", paymentAddress);
         localStorage.setItem("INVOICE_NUM", (invoiceNum+1).toString());
     }
     let total = 0;

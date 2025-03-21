@@ -17,7 +17,7 @@ const createWindow = (): BrowserWindow => {
         resizable: false,
         // maximizable: false,
         // movable: false,
-        titleBarStyle: isMac ? "hiddenInset" : "default",
+        // titleBarStyle: isMac ? "hiddenInset" : "default",
 
         // useContentSize: true,
         // frame: false,
