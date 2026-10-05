@@ -59,7 +59,7 @@ function App() {
           service: (tag[key.service] || "").trim(),
           rate: (tag[key.rate] || "").trim(),
           paymentMethod: (tag[key.paymentMethod] || "").trim(),
-          deliveryFee: (tag[key.deliveryFee] || "").trim(),
+          deliveryFee: (tag[key.deliveryFee] || "").replace(",", "").trim(),
           extras: (tag[key.extras] || "").trim(),
           deliveryNotes: (tag[key.deliveryNotes] || "").trim(),
           pod: (tag[key.pod] || "").trim(),
